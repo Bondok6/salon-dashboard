@@ -1,9 +1,9 @@
 <template>
-  <Tutorial/>
+  <section>
+    <h6>Home Page</h6>
+  </section>
 </template>
 
 <script>
-export default {
-  name: 'IndexPage'
-}
+export default {};
 </script>
