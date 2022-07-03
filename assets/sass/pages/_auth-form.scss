@@ -1,0 +1,76 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+
+  &__title {
+    font-size: 1.5rem;
+    color: $gray-clr;
+    margin: 0.5rem 0;
+    text-align: left;
+  }
+
+  input {
+    font-size: 1.7rem;
+    height: 5rem;
+    border: none;
+    color: $text-input;
+    border-left: 6px solid $color-primary;
+    border-radius: 0;
+  }
+
+  input:focus,
+  input:active,
+  input:hover {
+    border-color: #e6cd70;
+    color: $text-input;
+
+    &::placeholder {
+      color: $text-input;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+    color: $color-primary;
+    font-size: 1.6rem;
+    margin: 2rem 0;
+    transition: 0.4s;
+  }
+
+  a:hover {
+    color: #e6cc70;
+  }
+
+  &--reset {
+    align-items: flex-start;
+
+    figure {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    figcaption,
+    h4 {
+      color: $color-primary;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+}
+
+//  to remove arrows/spinners from input type number
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
