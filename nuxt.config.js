@@ -40,6 +40,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -48,8 +49,35 @@ export default {
     baseURL: "/",
   },
 
+  auth: {
+    strategies: {
+      local: {
+        user: {
+          property: "",
+        },
+        endpoints: {
+          login: { url: "/auth/login", method: "post" },
+          user: { url: "/", method: "get" },
+          logout: false,
+        },
+        token: {
+          maxAge: false,
+        },
+        refreshToken: {
+          property: false,
+          maxAge: false,
+        },
+        autoLogout: false,
+      },
+    },
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+  },
+
+  router: {
+    // middleware: "auth",
   },
 };
