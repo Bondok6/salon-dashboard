@@ -29,7 +29,7 @@
       />
     </el-form-item>
 
-    <button type="submit" class="btn btn--pink" @click.prevent="">
+    <button type="submit" class="btn btn--pink" @click.prevent="addNewPassword">
       CONFIRM
     </button>
   </el-form>
@@ -37,8 +37,9 @@
 
 <script>
 export default {
+  auth: false,
   layout: "auth",
-  // middleware: "loggedIn",
+
   data() {
     return {
       newPasswordForm: {
@@ -52,6 +53,32 @@ export default {
         ],
       },
     };
+  },
+  methods: {
+    addNewPassword() {
+      this.$refs.newPasswordForm.validate(async (valid) => {
+        if (valid) {
+          const loading = this.$loading();
+          const { newPassword, confirmPassword } = this.newPasswordForm;
+          if (newPassword !== confirmPassword) {
+            this.$message.error("New password and confirm password not match");
+            loading.close();
+            return;
+          }
+          try {
+            await this.$axios.post("/auth/change-forget-password", {
+              newPassword,
+            });
+            this.$message.success("New password has been set successfully ");
+            this.$router.push("/auth/login");
+          } catch {
+            this.$message.error(" something went wrong, please try again");
+          } finally {
+            loading.close();
+          }
+        }
+      });
+    },
   },
 };
 </script>

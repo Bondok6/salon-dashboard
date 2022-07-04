@@ -12,9 +12,9 @@
       </figcaption>
     </figure>
 
-    <el-form-item prop="username" label=" ">
+    <el-form-item prop="userName" label=" ">
       <el-input
-        v-model="loginForm.username"
+        v-model="loginForm.userName"
         placeholder="USER NAME"
         type="text"
       />
@@ -39,16 +39,16 @@
 
 <script>
 export default {
+  auth: false,
   layout: "auth",
-  // middleware: "loggedIn",
   data() {
     return {
       loginForm: {
-        username: "",
-        password: "",
+        userName: "admin-99",
+        password: "123456",
       },
       loginFormRules: {
-        username: [{ required: true, message: "username is required" }],
+        userName: [{ required: true, message: "username is required" }],
         password: [{ required: true, message: "password is required" }],
       },
     };
@@ -57,15 +57,13 @@ export default {
     login() {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
-          const loading = this.$loading({
-            lock: true,
-            text: "Loading",
-            spinner: "el-icon-loading",
-            background: "rgba(0, 0, 0, 0.7)",
-          });
-          console.log(this.loginForm);
+          const loading = this.$loading();
           try {
-            await this.$auth.loginWith("local", { data: this.loginForm });
+            const response = await this.$auth.loginWith("local", {
+              data: this.loginForm,
+            });
+            const { user } = response.data;
+            this.$auth.$storage.setUniversal("user", user, true);
             this.$message.success("Login Success");
             this.$router.push("/");
           } catch (error) {

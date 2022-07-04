@@ -27,12 +27,12 @@
 
 <script>
 export default {
+  auth: false,
   layout: "auth",
-  // middleware: "loggedIn",
   data() {
     return {
       resetForm: {
-        phone: "",
+        phone: "+201008453103",
       },
       resetFormRules: {
         phone: [{ required: true, message: "phone is required" }],
@@ -43,12 +43,18 @@ export default {
     reset() {
       this.$refs.resetForm.validate(async (valid) => {
         if (valid) {
-          const loading = this.$loading({
-            lock: true,
-            text: "Loading",
-            spinner: "el-icon-loading",
-            background: "rgba(0, 0, 0, 0.7)",
-          });
+          const loading = this.$loading();
+          try {
+            await this.$axios.post("/auth/forget-password", this.resetForm);
+            this.$message.success("Enter 5-digit code to reset password");
+            // save phone number to localStorage
+            localStorage.setItem("phone", this.resetForm.phone);
+            this.$router.push("/auth/verify");
+          } catch (error) {
+            this.$message.error("Something went wrong, please try again");
+          } finally {
+            loading.close();
+          }
         }
       });
     },
