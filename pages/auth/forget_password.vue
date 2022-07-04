@@ -27,6 +27,7 @@
 
 <script>
 export default {
+  middleware: "loggedIn",
   auth: false,
   layout: "auth",
   data() {
@@ -46,7 +47,7 @@ export default {
           const loading = this.$loading();
           try {
             await this.$axios.post("/auth/forget-password", this.resetForm);
-            this.$message.success("Enter 5-digit code to reset password");
+            this.$message.success("Enter 4-digit code to reset password");
             // save phone number to localStorage
             localStorage.setItem("phone", this.resetForm.phone);
             this.$router.push("/auth/verify");

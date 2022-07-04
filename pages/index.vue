@@ -6,7 +6,8 @@
     </p>
     <h2>Is LoggedIn, {{ $auth.loggedIn }}</h2>
 
-    <h3>Welcome, {{ $auth.$storage.getUniversal("user").userName }}</h3>
+    <h3>Welcome, {{ user.userName }}</h3>
+    <h3>Role: {{ user.role }}</h3>
 
     <button @click="logout">LOG OUT</button>
   </section>
@@ -25,6 +26,11 @@ export default {
           .replace(/^ +/, "")
           .replace(/=.*/, "=;expires=" + new Date().toUTCString());
       });
+    },
+  },
+  computed: {
+    user() {
+      return this.$auth.$storage.getUniversal("user");
     },
   },
 };

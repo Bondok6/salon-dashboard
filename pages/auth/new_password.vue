@@ -37,9 +37,9 @@
 
 <script>
 export default {
+  middleware: "loggedIn",
   auth: false,
   layout: "auth",
-
   data() {
     return {
       newPasswordForm: {
@@ -66,9 +66,17 @@ export default {
             return;
           }
           try {
-            await this.$axios.post("/auth/change-forget-password", {
-              newPassword,
-            });
+            await this.$axios.post(
+              "/auth/change-forget-password",
+              {
+                newPassword,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
             this.$message.success("New password has been set successfully ");
             this.$router.push("/auth/login");
           } catch {
