@@ -14,6 +14,11 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
+  loading: {
+    color: "#ea3162",
+    height: "5px",
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -40,16 +45,47 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: "/",
+    baseURL: "https://amanyapi.test.shout-out.website",
+  },
+
+  auth: {
+    redirect: {
+      login: "/auth/login",
+      logout: "/auth/login",
+      callback: "/auth/login",
+      home: "/",
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "/auth/signin", method: "post" },
+          logout: false,
+          user: false,
+        },
+        token: {
+          maxAge: false,
+        },
+        refreshToken: {
+          property: false,
+          maxAge: false,
+        },
+        autoLogout: false,
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+  },
+
+  router: {
+    middleware: "auth",
   },
 };
