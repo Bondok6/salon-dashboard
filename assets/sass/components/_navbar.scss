@@ -1,0 +1,58 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+
+  .logout-btn {
+    background: none;
+    border: 0;
+    font-size: 1.5rem;
+    color: $color-primary;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 28rem;
+
+    .nav-links {
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      gap: 1.2rem;
+    }
+
+    figure {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      text-align: right;
+      gap: 5px;
+      margin: 0.2rem;
+      text-align: center;
+
+      img {
+        width: 5rem;
+      }
+
+      figcaption {
+        display: flex;
+        flex-direction: column;
+      }
+
+      figcaption span {
+        color: #6e6b7b;
+        font-size: 1.4rem;
+      }
+      figcaption span:last-child {
+        font-size: 1.2rem;
+        text-transform: lowercase;
+      }
+    }
+  }
+}
