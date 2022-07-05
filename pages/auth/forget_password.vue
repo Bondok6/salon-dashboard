@@ -6,7 +6,7 @@
     class="form form--reset"
   >
     <figure>
-      <img src="~/assets/images/lock.png" alt="lock" />
+      <img src="~/assets/images/auth/lock.png" alt="lock" />
       <figcaption>forget password</figcaption>
     </figure>
     <h6 class="form__title">Enter your phone number to reset password</h6>

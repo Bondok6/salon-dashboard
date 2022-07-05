@@ -6,7 +6,7 @@
     class="form"
   >
     <figure>
-      <img src="~/assets/images/logo.png" alt="logo" />
+      <img src="~/assets/images/auth/logo.png" alt="logo" />
       <figcaption class="form__title">
         Please enter user name and password to login
       </figcaption>

@@ -6,7 +6,7 @@
     class="form form--reset"
   >
     <figure>
-      <img src="~/assets/images/verify.png" alt="verify-icon" />
+      <img src="~/assets/images/auth/verify.png" alt="verify-icon" />
       <figcaption>verification code</figcaption>
     </figure>
     <h6 class="form__title">Enter 4 digit code sent to your phone number</h6>
