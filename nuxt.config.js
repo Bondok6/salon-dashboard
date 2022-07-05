@@ -86,6 +86,7 @@ export default {
   },
 
   router: {
+    base: "/spa-dashboard/",
     middleware: "auth",
   },
 };

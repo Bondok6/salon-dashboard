@@ -1,13 +1,6 @@
 <template>
   <section class="text-center">
     <h1>Home Page</h1>
-    <p>
-      This is the home page. You can see the progress of the loading bar below.
-    </p>
-    <h2>Is LoggedIn, {{ $auth.loggedIn }}</h2>
-
-    <h3>Welcome, {{ user.userName }}</h3>
-    <h3>Role: {{ user.role }}</h3>
 
     <button @click="logout">LOG OUT</button>
   </section>

@@ -23,7 +23,7 @@
   input:focus,
   input:active,
   input:hover {
-    border-color: #e6cd70;
+    border-color: $color-secondary;
     color: $text-input;
 
     &::placeholder {
@@ -40,7 +40,7 @@
   }
 
   a:hover {
-    color: #e6cc70;
+    color: $color-secondary;
   }
 
   &--reset {
