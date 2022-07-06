@@ -53,7 +53,7 @@
     </el-form>
 
     <button class="btn btn--pink btn--add" @click.prevent="createAd()">
-      Create
+      Update
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
       Cancel

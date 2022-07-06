@@ -27,7 +27,16 @@ export const actions = {
     commit("setAds", ads);
   },
   async addAd({ commit }, ad) {
-    const newAd = await this.$axios.$post("/ads", ad);
+    const fd = new FormData();
+    fd.append("photos", ad.image[0]);
+    const res = await this.$axios.$post("/photos", fd);
+    const newAd = {
+      descriptionEn: ad.descriptionEn,
+      descriptionAr: ad.descriptionAr,
+      descriptionHeb: ad.descriptionHeb,
+      photo: res[0].url,
+    };
+    await this.$axios.$post("/ads", newAd);
     commit("addAd", newAd);
   },
   async updateAd({ commit }, ad) {
@@ -37,5 +46,12 @@ export const actions = {
   async deleteAd({ commit }, id) {
     await this.$axios.$delete(`/ads/${id}`);
     commit("deleteAd", id);
+  },
+};
+
+// Getters
+export const getters = {
+  getAdById: (state) => (id) => {
+    return state.ads.find((a) => a.id === id);
   },
 };
