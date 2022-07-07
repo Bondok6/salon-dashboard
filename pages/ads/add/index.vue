@@ -1,8 +1,8 @@
 <template>
-  <section class="ads-form mb-5">
-    <h2 class="ads-form__title">Add Advertisements</h2>
+  <section class="main-form mb-5">
+    <h2 class="main-form__title">Add Advertisements</h2>
 
-    <el-form :rules="addFormRules" :model="addForm" ref="addForm" class="mt-5">
+    <el-form :rules="formRules" :model="form" ref="form" class="mt-5">
       <div class="d-flex align-items-center gap-4 mb-5">
         <el-upload
           class="upload-demo"
@@ -31,7 +31,7 @@
         <el-input
           type="textarea"
           :rows="2"
-          v-model="addForm.descriptionEn"
+          v-model="form.descriptionEn"
         ></el-input>
       </el-form-item>
 
@@ -39,7 +39,7 @@
         label="Description Of Advertisement Ar"
         prop="descriptionAr"
       >
-        <el-input type="textarea" :rows="2" v-model="addForm.descriptionAr">
+        <el-input type="textarea" :rows="2" v-model="form.descriptionAr">
         </el-input>
       </el-form-item>
 
@@ -47,13 +47,13 @@
         label="Description Of Advertisement Heb"
         prop="descriptionAr"
       >
-        <el-input type="textarea" :rows="2" v-model="addForm.descriptionHeb">
+        <el-input type="textarea" :rows="2" v-model="form.descriptionHeb">
         </el-input>
       </el-form-item>
     </el-form>
 
     <button class="btn btn--pink btn--add" @click.prevent="createAd()">
-      Update
+      Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
       Cancel
@@ -65,13 +65,13 @@
 export default {
   data() {
     return {
-      addForm: {
+      form: {
         descriptionAr: "",
         descriptionEn: "",
         descriptionHeb: "",
         image: [],
       },
-      addFormRules: {
+      formRules: {
         descriptionAr: [
           {
             required: true,
@@ -100,21 +100,21 @@ export default {
       this.showUpload = !this.showUpload;
     },
     handleChange(file) {
-      this.addForm.image.push(file.raw);
+      this.form.image.push(file.raw);
       this.toggleUpload();
     },
     createAd() {
-      this.$refs.addForm.validate(async (valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          if (this.addForm.image.length === 0) {
+          if (this.form.image.length === 0) {
             this.$message.error("Please Upload Image");
             return;
           }
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("ads/addAd", this.addForm);
+            await this.$store.dispatch("ads/addAd", this.form);
             this.$message.success("Advertisement Created Successfully");
-            this.$router.push("/advertisments");
+            this.$router.push("/ads");
           } catch (error) {
             this.$message.error("Advertisement Creation Failed");
           } finally {
@@ -124,7 +124,7 @@ export default {
       });
     },
     goTo() {
-      this.$router.push("/advertisments");
+      this.$router.push("/ads");
     },
   },
 };

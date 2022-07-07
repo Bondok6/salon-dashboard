@@ -50,7 +50,7 @@ export default {
         });
     },
     goTo(id) {
-      this.$router.push(`/advertisments/${id}`);
+      this.$router.push(`/ads/${id}`);
     },
   },
 };

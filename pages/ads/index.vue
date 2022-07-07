@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goTo() {
-      this.$router.push("/advertisments/add");
+      this.$router.push("/ads/add");
     },
   },
   computed: {

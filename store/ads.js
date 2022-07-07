@@ -40,18 +40,15 @@ export const actions = {
     commit("addAd", newAd);
   },
   async updateAd({ commit }, ad) {
-    const updatedAd = await this.$axios.$put(`/ads/${ad.id}`, ad);
+    const updatedAd = await this.$axios.$patch(`/ads/${ad.id}`, ad);
     commit("updateAd", updatedAd);
   },
   async deleteAd({ commit }, id) {
     await this.$axios.$delete(`/ads/${id}`);
     commit("deleteAd", id);
   },
-};
-
-// Getters
-export const getters = {
-  getAdById: (state) => (id) => {
-    return state.ads.find((a) => a.id === id);
+  async fetchAd({ commit }, id) {
+    const ad = await this.$axios.$get(`/ads/${id}`);
+    return ad;
   },
 };
