@@ -1,0 +1,53 @@
+.ad-card {
+  margin-top: 6.5rem;
+  list-style-type: none;
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  &__img {
+    width: 350px;
+    height: 160px;
+    filter: brightness(0.8);
+    border-radius: 7px;
+
+    &:hover {
+      
+    }
+  }
+
+  &__description {
+    position: relative;
+    left: 50%;
+    top: -65px;
+    z-index: 1;
+    width: 17rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  &__options {
+    position: relative;
+    left: 60%;
+    top: -91%;
+    width: 18rem;
+
+    .delete,
+    .edit {
+      border: none;
+      background-color: #fff;
+      box-shadow: 0 -0.2rem 1rem rgba(0, 0, 0, 0.2);
+      padding: 0.6rem;
+      border-radius: 1rem;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(0.9);
+      }
+    }
+  }
+}

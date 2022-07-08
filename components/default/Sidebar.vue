@@ -75,8 +75,8 @@
             src="@/assets/images/sidebar/dashboard/icon-4.png"
             alt="advertisment-icon"
           />
-          <router-link to="/advertisments" class="sidebar-nav__link"
-            >Advertisments</router-link
+          <router-link to="/ads" class="sidebar-nav__link"
+            >Advertisements</router-link
           >
         </li>
         <li class="sidebar-nav__item">

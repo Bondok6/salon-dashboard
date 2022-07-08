@@ -1,0 +1,20 @@
+.empty {
+  width: 28rem;
+  height: 80vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 12rem;
+  }
+
+  figcaption {
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+}

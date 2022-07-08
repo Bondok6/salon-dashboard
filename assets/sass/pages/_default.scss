@@ -54,5 +54,6 @@
   top: 10rem;
   right: 0;
   width: calc(100% - 250px);
-  border: 1px solid red;
+  height: calc(100% - 10rem);
+  overflow: auto;
 }

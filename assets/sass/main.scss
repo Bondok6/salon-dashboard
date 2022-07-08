@@ -9,9 +9,12 @@
 @import "base/typography";
 
 // components
-@import "components/buttons";
-@import "components/sidebar";
-@import "components/navbar";
+@import "components/default/sidebar";
+@import "components/default/navbar";
+@import "components/ui/buttons";
+@import "components/ui/empty";
+@import "components/ads/card";
+@import "components/mainForm";
 
 // layout
 
