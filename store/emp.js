@@ -62,7 +62,6 @@ export const actions = {
       ...employee,
       profile: res[0].url,
     };
-    console.log(newEmployee);
     const updatedEmployee = await this.$axios.$put(
       `/users/${id}/admin-control`,
       newEmployee

@@ -109,7 +109,6 @@ export default {
       this.$route.params.id
     );
     this.form = { ...data, image: [] };
-    console.log(this.form);
   },
   methods: {
     toggleUpload() {
@@ -129,7 +128,6 @@ export default {
           if (this.form.image.length > 0) {
             delete this.form.profile;
           }
-          console.log(this.form);
           const loading = this.$loading();
           try {
             await this.$store.dispatch("emp/updateEmployee", this.form);
