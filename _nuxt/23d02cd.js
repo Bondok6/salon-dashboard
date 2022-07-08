@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[15],{456:function(e,t,n){"use strict";n.r(t);var l={},c=n(34),component=Object(c.a)(l,(function(){var e=this,t=e.$createElement;return(e._self._c||t)("div",{staticClass:"text-center"},[e._v("Employees")])}),[],!1,null,null,null);t.default=component.exports}}]);
