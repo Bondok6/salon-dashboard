@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Advertisements</h2>
+    <h2 class="main-form__title">Add Employees</h2>
 
     <el-form :rules="formRules" :model="form" ref="form" class="mt-5">
       <div class="d-flex align-items-center gap-4 mb-5">
@@ -19,41 +19,45 @@
           <i class="el-icon-upload"></i>
         </el-upload>
         <div class="img-caption">
-          <h5>Advertisement image</h5>
+          <h5>Employee image</h5>
           <h6>Please Upload Image 340*160</h6>
         </div>
       </div>
 
-      <el-form-item
-        label="Description Of Advertisement En"
-        prop="descriptionEn"
-      >
-        <el-input
-          type="textarea"
-          :rows="2"
-          v-model="form.descriptionEn"
-        ></el-input>
-      </el-form-item>
+      <div class="d-flex flex-wrap gap-5 mb-4">
+        <el-form-item
+          label="Name of Employee"
+          prop="userName"
+          style="width: 500px"
+        >
+          <el-input v-model="form.userName"></el-input>
+        </el-form-item>
 
-      <el-form-item
-        label="Description Of Advertisement Ar"
-        prop="descriptionAr"
-      >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionAr">
-        </el-input>
-      </el-form-item>
+        <el-form-item label="Phone" prop="phone" style="width: 500px">
+          <el-input
+            type="number"
+            v-model="form.phone"
+            placeholder="(+20) 01555389225"
+          >
+          </el-input>
+        </el-form-item>
+      </div>
 
-      <el-form-item
-        label="Description Of Advertisement Heb"
-        prop="descriptionAr"
-      >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionHeb">
-        </el-input>
+      <el-form-item label="Attendance" prop="attendent">
+        <el-select v-model="form.attendent" placeholder="Select">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-form>
 
-    <button class="btn btn--pink btn--add" @click.prevent="updateAd()">
-      Update
+    <button class="btn btn--pink btn--add" @click.prevent="createEmp()">
+      Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
       Cancel
@@ -67,32 +71,41 @@ export default {
     return {
       form: {},
       formRules: {
-        descriptionAr: [
+        userName: [
           {
             required: true,
-            message: "Description Of Advertisement Ar is required",
+            message: "Please input name of employee",
           },
         ],
-        descriptionEn: [
+        phone: [
           {
             required: true,
-            message: "Description Of Advertisement En is required",
+            message: "Please input phone number",
           },
         ],
-        descriptionHeb: [
+        attendent: [
           {
             required: true,
-            message: "Description Of Advertisement Heb is required",
+            message: "Please select attendant",
           },
         ],
-        image: [{ required: true, message: "Image is required" }],
       },
+      options: [
+        {
+          value: "PRESENT",
+          label: "Present",
+        },
+        {
+          value: "ABSENT",
+          label: "Absent",
+        },
+      ],
       showUpload: true,
     };
   },
   async created() {
     const data = await this.$store.dispatch(
-      "ads/fetchAd",
+      "emp/fetchEmployee",
       this.$route.params.id
     );
     this.form = { ...data, image: [] };
@@ -109,19 +122,19 @@ export default {
       this.form.image.pop();
       this.toggleUpload();
     },
-    updateAd() {
+    createEmp() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.form.image.length > 0) {
-            delete this.form.photo;
+            delete this.form.profile;
           }
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("ads/updateAd", this.form);
-            this.$message.success("Advertisement Updated Successfully");
-            this.$router.push("/ads");
+            await this.$store.dispatch("emp/updateEmployee", this.form);
+            this.$message.success("Employee Updated Successfully");
+            this.$router.push("/employees");
           } catch (error) {
-            this.$message.error("Error While Updating Advertisement");
+            this.$message.error("Error while updating employee");
           } finally {
             loading.close();
           }
@@ -129,7 +142,7 @@ export default {
       });
     },
     goTo() {
-      this.$router.push("/ads");
+      this.$router.push("/employees");
     },
   },
 };

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="109" height="88.505" viewBox="0 0 109 88.505">
+  <g id="Component_22_3" data-name="Component 22 – 3" transform="translate(0 81.505)">
+    <ellipse id="Ellipse_91" data-name="Ellipse 91" cx="54.5" cy="3.5" rx="54.5" ry="3.5" fill="#cbcbcb"/>
+  </g>
+  <g id="Group_9133" data-name="Group 9133" transform="translate(9.408 0.5)">
+    <g id="Profile" transform="translate(42.471 10.086)">
+      <path id="Path_331" data-name="Path 331" d="M111.152,260.184c-2.459-2.952-5.545-5.485-8.9-5.485s-6.438,2.534-8.9,5.485a11.483,11.483,0,0,0,.759,15.448h0a11.508,11.508,0,0,0,16.275,0h0A11.483,11.483,0,0,0,111.152,260.184Z" transform="translate(-77.898 -254.699)" fill="none" stroke="#cbcbcb" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+      <rect id="Rectangle_308" data-name="Rectangle 308" width="48.714" height="16.955" rx="8" transform="translate(0 31.759)" fill="none" stroke="#cbcbcb" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+    <g id="Profile-2" data-name="Profile" transform="translate(-2 1)">
+      <path id="Path_331-2" data-name="Path 331" d="M118.769,262.23c-3.376-4.053-7.614-7.531-12.215-7.531s-8.84,3.479-12.215,7.531a15.766,15.766,0,0,0,1.043,21.21h0a15.8,15.8,0,0,0,22.345,0h0a15.766,15.766,0,0,0,1.043-21.21Z" transform="translate(-73.111 -254.699)" fill="none" stroke="#cbcbcb" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+      <rect id="Rectangle_308-2" data-name="Rectangle 308" width="66.884" height="23.279" rx="11.639" transform="translate(0 43.605)" fill="#fff" stroke="#cbcbcb" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

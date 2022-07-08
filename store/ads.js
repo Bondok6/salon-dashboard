@@ -40,7 +40,20 @@ export const actions = {
     commit("addAd", newAd);
   },
   async updateAd({ commit }, ad) {
-    const updatedAd = await this.$axios.$patch(`/ads/${ad.id}`, ad);
+    const { id } = ad;
+    if (ad.hasOwnProperty("photo")) {
+      const updatedAd = await this.$axios.$patch(`/ads/${id}`, ad);
+      commit("updateAd", updatedAd);
+      return;
+    }
+    const fd = new FormData();
+    fd.append("photos", ad.image[0]);
+    const res = await this.$axios.$post("/photos", fd);
+    const newAd = {
+      ...ad,
+      photo: res[0].url,
+    };
+    const updatedAd = await this.$axios.$patch(`/ads/${id}`, newAd);
     commit("updateAd", updatedAd);
   },
   async deleteAd({ commit }, id) {

@@ -36,7 +36,6 @@ export default {
       })
         .then(async () => {
           await this.$store.dispatch("ads/deleteAd", id);
-          console.log("click");
           this.$message({
             type: "success",
             message: "Delete completed",
