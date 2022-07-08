@@ -24,31 +24,26 @@
         </div>
       </div>
 
-      <el-form-item
-        label="Description Of Advertisement En"
-        prop="descriptionEn"
-      >
-        <el-input
-          type="textarea"
-          :rows="2"
-          v-model="form.descriptionEn"
-        ></el-input>
-      </el-form-item>
+      <div class="d-flex gap-5 mb-4">
+        <el-form-item label="Name of Employee" prop="userName" class="w-50">
+          <el-input v-model="form.userName"></el-input>
+        </el-form-item>
 
-      <el-form-item
-        label="Description Of Advertisement Ar"
-        prop="descriptionAr"
-      >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionAr">
-        </el-input>
-      </el-form-item>
+        <el-form-item label="Phone" prop="phone" class="w-50">
+          <el-input type="number" v-model="form.phone"> </el-input>
+        </el-form-item>
+      </div>
 
-      <el-form-item
-        label="Description Of Advertisement Heb"
-        prop="descriptionAr"
-      >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionHeb">
-        </el-input>
+      <el-form-item label="Attendance" prop="attendant">
+        <el-select v-model="form.attendant" placeholder="Select">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-form>
 
@@ -66,32 +61,41 @@ export default {
   data() {
     return {
       form: {
-        descriptionAr: "",
-        descriptionEn: "",
-        descriptionHeb: "",
+        userName: "",
+        phone: "",
+        attendant: "",
         image: [],
       },
       formRules: {
-        descriptionAr: [
+        userName: [
           {
             required: true,
-            message: "Description Of Advertisement Ar is required",
+            message: "Please input name of employee",
           },
         ],
-        descriptionEn: [
+        phone: [
           {
             required: true,
-            message: "Description Of Advertisement En is required",
+            message: "Please input phone number",
           },
         ],
-        descriptionHeb: [
+        attendant: [
           {
             required: true,
-            message: "Description Of Advertisement Heb is required",
+            message: "Please select attendant",
           },
         ],
-        image: [{ required: true, message: "Image is required" }],
       },
+      options: [
+        {
+          value: "1",
+          label: "Yes",
+        },
+        {
+          value: "0",
+          label: "No",
+        },
+      ],
       showUpload: true,
     };
   },
@@ -100,19 +104,19 @@ export default {
       this.showUpload = !this.showUpload;
     },
     handleChange(file) {
-      this.addForm.image.push(file.raw);
+      this.form.image.push(file.raw);
       this.toggleUpload();
     },
     createAd() {
-      this.$refs.addForm.validate(async (valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          if (this.addForm.image.length === 0) {
+          if (this.form.image.length === 0) {
             this.$message.error("Please Upload Image");
             return;
           }
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("ads/addAd", this.addForm);
+            await this.$store.dispatch("ads/addAd", this.form);
             this.$message.success("Advertisement Created Successfully");
             this.$router.push("/ads");
           } catch (error) {

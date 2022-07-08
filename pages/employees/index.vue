@@ -2,11 +2,13 @@
   <section>
     <uiAddButton text="Employee" @click="goTo()" />
 
-    <!-- <uiEmpty
+    <uiEmpty
       v-if="!employees.length"
-      imgSrc="emp/no-emp.png"
+      imgSrc="emp/no-emp.svg"
       caption="No employees have been added yet"
-    /> -->
+    />
+
+    <empEmployeeList :tableData="employees" />
   </section>
 </template>
 

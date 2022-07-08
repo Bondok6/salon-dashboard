@@ -10,6 +10,9 @@ export const mutations = {
   addEmployee(state, employee) {
     state.employees.push(employee);
   },
+  deleteEmployee(state, id) {
+    state.employees = state.employees.filter((e) => e.id !== id);
+  },
 };
 
 // Actions
@@ -33,5 +36,9 @@ export const actions = {
     };
     await this.$axios.$post("/employees", newEmployee);
     commit("addEmployee", newEmployee);
+  },
+  async deleteEmployee({ commit }, id) {
+    await this.$axios.$delete(`/users/${id}`);
+    commit("deleteEmployee", id);
   },
 };
