@@ -83,8 +83,8 @@ export default {
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(_, row) {
+      this.$router.push(`/employees/${row.id}`);
     },
     handleDelete(_, row) {
       this.$confirm(

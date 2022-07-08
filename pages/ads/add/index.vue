@@ -9,7 +9,7 @@
           list-type="picture-card"
           action="#"
           :on-change="handleChange"
-          :on-remove="toggleUpload"
+          :on-remove="handleRemove"
           :class="{ hideUpload: !showUpload }"
           :show-file-list="true"
           :auto-upload="false"
@@ -101,6 +101,10 @@ export default {
     },
     handleChange(file) {
       this.form.image.push(file.raw);
+      this.toggleUpload();
+    },
+    handleRemove() {
+      this.form.image.pop();
       this.toggleUpload();
     },
     createAd() {

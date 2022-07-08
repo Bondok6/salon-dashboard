@@ -116,7 +116,7 @@ export default {
       this.form.image.push(file.raw);
       this.toggleUpload();
     },
-    handleRemove(file) {
+    handleRemove() {
       this.form.image.pop();
       this.toggleUpload();
     },

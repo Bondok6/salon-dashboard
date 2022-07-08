@@ -46,10 +46,24 @@ export const actions = {
     commit("deleteEmployee", id);
   },
   async updateEmployee({ commit }, employee) {
-    const updatedEmployee = await this.$axios.$patch(
-      `/users/${employee.id}`,
-      employee
+    const { id } = employee;
+    const fd = new FormData();
+    fd.append("photos", employee.image[0]);
+    const res = await this.$axios.$post("/photos", fd);
+    const newEmployee = {
+      userName: employee.userName,
+      profile: res[0].url,
+      phone: employee.phone,
+      attendent: employee.attendent,
+    };
+    const updatedEmployee = await this.$axios.$put(
+      `/users/${id}/admin-control`,
+      newEmployee
     );
-    commit("updateAd", updatedAd);
+    commit("updateEmployee", updatedEmployee);
+  },
+  async fetchEmployee({ commit }, id) {
+    const employee = await this.$axios.$get(`/users/${id}`);
+    return employee;
   },
 };

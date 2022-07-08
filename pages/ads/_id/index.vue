@@ -9,7 +9,7 @@
           list-type="picture-card"
           action="#"
           :on-change="handleChange"
-          :on-remove="toggleUpload"
+          :on-remove="handleRemove"
           :class="{ hideUpload: !showUpload }"
           :show-file-list="true"
           :auto-upload="false"
@@ -95,7 +95,7 @@ export default {
       "ads/fetchAd",
       this.$route.params.id
     );
-    this.form = { ...data };
+    this.form = { ...data, image: [] };
     console.log(this.form);
   },
   methods: {
@@ -103,16 +103,20 @@ export default {
       this.showUpload = !this.showUpload;
     },
     handleChange(file) {
-      this.form.photo.push(file.raw);
+      this.form.image.push(file.raw);
+      this.toggleUpload();
+    },
+    handleRemove() {
+      this.form.image.pop();
       this.toggleUpload();
     },
     updateAd() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          if (this.form.photo.length === 0) {
-            this.$message.error("Please Upload Image");
-            return;
+          if (this.form.image.length > 0) {
+            delete this.form.photo;
           }
+          console.log(this.form);
           const loading = this.$loading();
           try {
             await this.$store.dispatch("ads/updateAd", this.form);
