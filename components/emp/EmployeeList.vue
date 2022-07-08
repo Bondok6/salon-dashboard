@@ -3,7 +3,7 @@
     :data="
       tableData.filter(
         (data) =>
-          !search || data.empName.toLowerCase().includes(search.toLowerCase())
+          !search || data.userName.toLowerCase().includes(search.toLowerCase())
       )
     "
     style="width: 100%"
@@ -21,7 +21,7 @@
         />
       </template>
     </el-table-column>
-    <el-table-column label="Name" prop="empName"> </el-table-column>
+    <el-table-column label="Name" prop="userName"> </el-table-column>
     <el-table-column label="Phone" prop="phone"> </el-table-column>
     <el-table-column label="State" prop="state">
       <template slot-scope="scope">

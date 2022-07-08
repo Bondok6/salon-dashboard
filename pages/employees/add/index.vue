@@ -9,7 +9,7 @@
           list-type="picture-card"
           action="#"
           :on-change="handleChange"
-          :on-remove="toggleUpload"
+          :on-remove="handleRemove"
           :class="{ hideUpload: !showUpload }"
           :show-file-list="true"
           :auto-upload="false"
@@ -27,10 +27,10 @@
       <div class="d-flex flex-wrap gap-5 mb-4">
         <el-form-item
           label="Name of Employee"
-          prop="empName"
+          prop="userName"
           style="width: 500px"
         >
-          <el-input v-model="form.empName"></el-input>
+          <el-input v-model="form.userName"></el-input>
         </el-form-item>
 
         <el-form-item label="Phone" prop="phone" style="width: 500px">
@@ -70,13 +70,13 @@ export default {
   data() {
     return {
       form: {
-        empName: "",
+        userName: "",
         phone: "",
         attendent: "",
         image: [],
       },
       formRules: {
-        empName: [
+        userName: [
           {
             required: true,
             message: "Please input name of employee",
@@ -116,6 +116,10 @@ export default {
       this.form.image.push(file.raw);
       this.toggleUpload();
     },
+    handleRemove(file) {
+      this.form.image.pop();
+      this.toggleUpload();
+    },
     createEmp() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
@@ -125,7 +129,6 @@ export default {
           }
           const loading = this.$loading();
           try {
-            console.log(this.form);
             await this.$store.dispatch("emp/addEmployee", this.form);
             this.$message.success("Employee Created Successfully");
             this.$router.push("/employees");

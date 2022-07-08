@@ -13,6 +13,10 @@ export const mutations = {
   deleteEmployee(state, id) {
     state.employees = state.employees.filter((e) => e.id !== id);
   },
+  updateEmployee(state, employee) {
+    const index = state.employees.findIndex((e) => e.id === employee.id);
+    state.employees[index] = employee;
+  },
 };
 
 // Actions
@@ -29,10 +33,9 @@ export const actions = {
     fd.append("photos", employee.image[0]);
     const res = await this.$axios.$post("/photos", fd);
     const newEmployee = {
-      empName: employee.empName,
+      userName: employee.userName,
       profile: res[0].url,
       phone: employee.phone,
-      role: "EMPLOYEE",
       attendent: employee.attendent,
     };
     await this.$axios.$post("/users/add/employees", newEmployee);
@@ -41,5 +44,12 @@ export const actions = {
   async deleteEmployee({ commit }, id) {
     await this.$axios.$delete(`/users/${id}`);
     commit("deleteEmployee", id);
+  },
+  async updateEmployee({ commit }, employee) {
+    const updatedEmployee = await this.$axios.$patch(
+      `/users/${employee.id}`,
+      employee
+    );
+    commit("updateAd", updatedAd);
   },
 };
