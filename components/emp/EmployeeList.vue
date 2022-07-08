@@ -88,7 +88,7 @@ export default {
     },
     handleDelete(_, row) {
       this.$confirm(
-        `Are you sure you want to delete ${row.empName}?`,
+        `Are you sure you want to delete ${row.userName}?`,
         "Warning",
         {
           confirmButtonText: "Confirm",

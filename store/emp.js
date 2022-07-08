@@ -47,15 +47,22 @@ export const actions = {
   },
   async updateEmployee({ commit }, employee) {
     const { id } = employee;
+    if (employee.hasOwnProperty("profile")) {
+      const updatedEmployee = await this.$axios.$put(
+        `/users/${id}/admin-control`,
+        employee
+      );
+      commit("updateEmployee", updatedEmployee);
+      return;
+    }
     const fd = new FormData();
     fd.append("photos", employee.image[0]);
     const res = await this.$axios.$post("/photos", fd);
     const newEmployee = {
-      userName: employee.userName,
+      ...employee,
       profile: res[0].url,
-      phone: employee.phone,
-      attendent: employee.attendent,
     };
+    console.log(newEmployee);
     const updatedEmployee = await this.$axios.$put(
       `/users/${id}/admin-control`,
       newEmployee
