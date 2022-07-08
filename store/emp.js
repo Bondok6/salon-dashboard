@@ -29,12 +29,13 @@ export const actions = {
     fd.append("photos", employee.image[0]);
     const res = await this.$axios.$post("/photos", fd);
     const newEmployee = {
-      name: employee.name,
-      email: employee.email,
+      empName: employee.empName,
+      profile: res[0].url,
       phone: employee.phone,
-      photo: res[0].url,
+      role: "EMPLOYEE",
+      attendent: employee.attendent,
     };
-    await this.$axios.$post("/employees", newEmployee);
+    await this.$axios.$post("/users/add/employees", newEmployee);
     commit("addEmployee", newEmployee);
   },
   async deleteEmployee({ commit }, id) {

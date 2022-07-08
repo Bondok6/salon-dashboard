@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goTo() {
-      this.$router.push("/emplyees/add");
+      this.$router.push("/employees/add");
     },
   },
   computed: {

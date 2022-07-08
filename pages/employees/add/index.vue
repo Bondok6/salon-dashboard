@@ -24,18 +24,27 @@
         </div>
       </div>
 
-      <div class="d-flex gap-5 mb-4">
-        <el-form-item label="Name of Employee" prop="userName" class="w-50">
-          <el-input v-model="form.userName"></el-input>
+      <div class="d-flex flex-wrap gap-5 mb-4">
+        <el-form-item
+          label="Name of Employee"
+          prop="empName"
+          style="width: 500px"
+        >
+          <el-input v-model="form.empName"></el-input>
         </el-form-item>
 
-        <el-form-item label="Phone" prop="phone" class="w-50">
-          <el-input type="number" v-model="form.phone"> </el-input>
+        <el-form-item label="Phone" prop="phone" style="width: 500px">
+          <el-input
+            type="number"
+            v-model="form.phone"
+            placeholder="(+20) 01555389225"
+          >
+          </el-input>
         </el-form-item>
       </div>
 
-      <el-form-item label="Attendance" prop="attendant">
-        <el-select v-model="form.attendant" placeholder="Select">
+      <el-form-item label="Attendance" prop="attendent">
+        <el-select v-model="form.attendent" placeholder="Select">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -47,7 +56,7 @@
       </el-form-item>
     </el-form>
 
-    <button class="btn btn--pink btn--add" @click.prevent="createE()">
+    <button class="btn btn--pink btn--add" @click.prevent="createEmp()">
       Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
@@ -61,13 +70,13 @@ export default {
   data() {
     return {
       form: {
-        userName: "",
+        empName: "",
         phone: "",
-        attendant: "",
+        attendent: "",
         image: [],
       },
       formRules: {
-        userName: [
+        empName: [
           {
             required: true,
             message: "Please input name of employee",
@@ -79,7 +88,7 @@ export default {
             message: "Please input phone number",
           },
         ],
-        attendant: [
+        attendent: [
           {
             required: true,
             message: "Please select attendant",
@@ -88,12 +97,12 @@ export default {
       },
       options: [
         {
-          value: "1",
-          label: "Yes",
+          value: "PRESENT",
+          label: "Present",
         },
         {
-          value: "0",
-          label: "No",
+          value: "ABSENT",
+          label: "Absent",
         },
       ],
       showUpload: true,
@@ -107,7 +116,7 @@ export default {
       this.form.image.push(file.raw);
       this.toggleUpload();
     },
-    createAd() {
+    createEmp() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.form.image.length === 0) {
@@ -116,9 +125,10 @@ export default {
           }
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("ads/addAd", this.form);
-            this.$message.success("Advertisement Created Successfully");
-            this.$router.push("/ads");
+            console.log(this.form);
+            await this.$store.dispatch("emp/addEmployee", this.form);
+            this.$message.success("Employee Created Successfully");
+            this.$router.push("/employees");
           } catch (error) {
             this.$message.error("Advertisement Creation Failed");
           } finally {
@@ -128,7 +138,7 @@ export default {
       });
     },
     goTo() {
-      this.$router.push("/ads");
+      this.$router.push("/employees");
     },
   },
 };

@@ -1,0 +1,46 @@
+.state {
+  padding: 1rem 2rem;
+  border-radius: 50%;
+
+  &--free {
+    background-color: rgb(26, 110, 216, 0.2);
+    color: #1a6ed8;
+  }
+
+  &--busy {
+    background-color: #fff0a1;
+    color: #d0ab28;
+  }
+}
+
+.attendance {
+  font-size: 1.2rem;
+  font-weight: 600;
+  &::before {
+    content: "";
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    position: absolute;
+    top: 26px;
+    left: -7px;
+  }
+
+  &--present {
+    color: #00b400;
+
+    &::before {
+      background-color: #00b400;
+    }
+  }
+
+  &--absent {
+    color: #d81a1a;
+
+    &::before {
+      background-color: #d81a1a;
+    }
+  }
+}
