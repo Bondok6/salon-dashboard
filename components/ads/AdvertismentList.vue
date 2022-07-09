@@ -49,7 +49,7 @@ export default {
         });
     },
     goTo(id) {
-      this.$router.push(`/ads/${id}`);
+      this.$router.push(`/ads/edit/${id}`);
     },
   },
 };

@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     handleEdit(_, row) {
-      this.$router.push(`/employees/${row.id}`);
+      this.$router.push(`/employees/edit/${row.id}`);
     },
     handleDelete(_, row) {
       this.$confirm(
