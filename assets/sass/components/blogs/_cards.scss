@@ -69,5 +69,10 @@
   img {
     padding: 0 0.5rem;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
   }
 }
