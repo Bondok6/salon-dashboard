@@ -68,7 +68,7 @@ export const actions = {
     );
     commit("updateEmployee", updatedEmployee);
   },
-  async fetchEmployee({ commit }, id) {
+  async fetchEmployee(_, id) {
     const employee = await this.$axios.$get(`/users/${id}`);
     return employee;
   },
