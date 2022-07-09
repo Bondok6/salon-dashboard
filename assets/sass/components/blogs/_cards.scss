@@ -28,16 +28,16 @@
       flex: 1;
       padding: 0.5rem;
       cursor: pointer;
+    }
 
-      h3 {
-        font-size: 1.6rem;
-        color: #3d3d3d;
-      }
+    &-title {
+      font-size: 1.8rem;
+      color: #3d3d3d;
+    }
 
-      p {
-        font-size: 1.2rem;
-        color: #c1c1c1;
-      }
+    &-text {
+      font-size: 1.2rem;
+      color: #c1c1c1;
     }
 
     &-buttons {
@@ -49,5 +49,25 @@
     @media (max-width: 768px) {
       flex-direction: column;
     }
+  }
+}
+
+.text--details {
+  font-size: 1.5rem;
+}
+
+.img--detials {
+  width: 120px;
+  height: 108px;
+}
+
+.buttons--details {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+
+  img {
+    padding: 0 0.5rem;
+    cursor: pointer;
   }
 }
