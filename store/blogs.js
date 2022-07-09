@@ -41,12 +41,11 @@ export const actions = {
     await this.$axios.$delete(`/blogs-and-videos/${blogId}`);
     commit("deleteBlog", blogId);
   },
-  async fetchBlog({ commit }, blogId) {
+  async fetchBlog(_, blogId) {
     const blog = await this.$axios.$get(`/blogs-and-videos/${blogId}`);
     return blog;
   },
   async updateBlog({ commit }, blog) {
-    console.log(blog);
     const { id } = blog;
     if (blog.hasOwnProperty("images")) {
       const updateBlog = await this.$axios.$patch(

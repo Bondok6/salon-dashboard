@@ -60,7 +60,7 @@ export const actions = {
     await this.$axios.$delete(`/ads/${id}`);
     commit("deleteAd", id);
   },
-  async fetchAd({ commit }, id) {
+  async fetchAd(_, id) {
     const ad = await this.$axios.$get(`/ads/${id}`);
     return ad;
   },

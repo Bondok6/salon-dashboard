@@ -108,7 +108,6 @@ export default {
   async created() {
     const { id } = this.$route.params;
     const data = await this.$store.dispatch("blogs/fetchBlog", id);
-    console.log(data);
     this.form = { ...data, image: [] };
   },
   data() {
