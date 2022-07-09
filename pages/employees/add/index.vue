@@ -133,7 +133,7 @@ export default {
             this.$message.success("Employee Created Successfully");
             this.$router.push("/employees");
           } catch (error) {
-            this.$message.error("Advertisement Creation Failed");
+            this.$message.error("Employee Creation Failed");
           } finally {
             loading.close();
           }
