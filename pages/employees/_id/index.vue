@@ -20,7 +20,7 @@
         </el-upload>
         <div class="img-caption">
           <h5>Employee image</h5>
-          <h6>Please Upload Image 340*160</h6>
+          <h6>Please Upload Image 160*160</h6>
         </div>
       </div>
 
