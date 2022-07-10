@@ -84,7 +84,6 @@ export default {
         if (valid) {
           const loading = this.$loading();
           try {
-            console.log(this.form);
             await this.$store.dispatch("videos/addVideo", this.form);
             this.$message.success("Video Created Successfully");
             this.$router.push("/videos");

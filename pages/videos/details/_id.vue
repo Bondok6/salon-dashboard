@@ -33,9 +33,7 @@ export default {
   async fetch() {
     const { id } = this.$route.params;
     const data = await this.$store.dispatch("videos/fetchVideo", id);
-    console.log(data);
     this.video = data;
-    console.log(this.video);
   },
   data() {
     return {
