@@ -25,7 +25,6 @@ export const actions = {
     const employees = await this.$axios.$get("/users", {
       params: { roles: "EMPLOYEE" },
     });
-
     commit("setEmployees", employees);
   },
   async addEmployee({ commit }, employee) {
@@ -33,10 +32,8 @@ export const actions = {
     fd.append("photos", employee.image[0]);
     const res = await this.$axios.$post("/photos", fd);
     const newEmployee = {
-      userName: employee.userName,
+      ...employee,
       profile: res[0].url,
-      phone: employee.phone,
-      attendent: employee.attendent,
     };
     await this.$axios.$post("/users/add/employees", newEmployee);
     commit("addEmployee", newEmployee);

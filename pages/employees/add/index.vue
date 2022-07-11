@@ -27,10 +27,10 @@
       <div class="d-flex flex-wrap gap-5 mb-4">
         <el-form-item
           label="Name of Employee"
-          prop="userName"
+          prop="empName"
           style="width: 500px"
         >
-          <el-input v-model="form.userName"></el-input>
+          <el-input v-model="form.empName"></el-input>
         </el-form-item>
 
         <el-form-item label="Phone" prop="phone" style="width: 500px">
@@ -70,13 +70,13 @@ export default {
   data() {
     return {
       form: {
-        userName: "",
+        empName: "",
         phone: "",
         attendent: "",
         image: [],
       },
       formRules: {
-        userName: [
+        empName: [
           {
             required: true,
             message: "Please input name of employee",
