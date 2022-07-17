@@ -84,9 +84,9 @@
           ></el-switch>
         </el-form-item>
 
-        <el-form-item prop="numOfSessions" v-if="enabled === 'true'">
+        <el-form-item prop="numofsets" v-if="enabled === 'true'">
           <span class="d-block">Number Of Sessions</span>
-          <el-input v-model="form.numOfSessions" type="number"></el-input>
+          <el-input v-model="form.numofsets" type="number"></el-input>
         </el-form-item>
 
         <el-form-item label="Pick Color" prop="color">
@@ -115,9 +115,9 @@ export default {
       descriptionEn: "",
       descriptionAr: "",
       descriptionHeb: "",
-      numOfSessions: "",
+      numofsets: "",
       color: "#F8AF03s",
-      image: [],
+      images: [],
     };
   },
   data() {
@@ -129,9 +129,9 @@ export default {
         descriptionEn: "",
         descriptionAr: "",
         descriptionHeb: "",
-        numOfSessions: "",
+        numofsets: "",
         color: "#F8AF03s",
-        image: [],
+        images: [],
       },
       formRules: {
         nameEn: [{ required: true, message: "Please enter name in English" }],
@@ -146,7 +146,7 @@ export default {
         descriptionHeb: [
           { required: true, message: "Please enter description in Hebrew" },
         ],
-        numOfSessions: [
+        numofsets: [
           { required: true, message: "Please enter number of sessions" },
         ],
         color: [{ required: true, message: "Please pick a color" }],
@@ -160,17 +160,17 @@ export default {
       this.showUpload = !this.showUpload;
     },
     handleChange(file) {
-      this.form.image.push(file.raw);
+      this.form.images.push(file.raw);
       this.toggleUpload();
     },
     handleRemove() {
-      this.form.image.pop();
+      this.form.images.pop();
       this.toggleUpload();
     },
     goNext() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          if (this.form.image.length == 0) {
+          if (this.form.images.length == 0) {
             this.$message.error("Please upload image");
             return;
           }

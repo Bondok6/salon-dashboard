@@ -69,4 +69,10 @@ export const actions = {
     const employee = await this.$axios.$get(`/users/${id}`);
     return employee;
   },
+  async fetchValidEmployees() {
+    const validEmployees = await this.$axios.$get(
+      "users?status=VALID&roles=EMPLOYEE"
+    );
+    return validEmployees;
+  },
 };
