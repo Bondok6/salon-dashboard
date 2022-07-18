@@ -37,7 +37,7 @@
           <el-input
             type="number"
             v-model="form.phone"
-            placeholder="(+20) 01555389225"
+            placeholder="(+973) 1555389225"
           >
           </el-input>
         </el-form-item>

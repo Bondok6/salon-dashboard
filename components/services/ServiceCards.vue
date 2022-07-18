@@ -51,6 +51,9 @@ export default {
     goToDetails(id) {
       this.$router.push(`/services-offers/details/${id}`);
     },
+    goTo(id) {
+      this.$router.push(`/services-offers/edit/step1/${id}`);
+    },
     deleteService(service) {
       this.$confirm(
         `Are you sure you want to delete '${service.nameEn}' service?`,

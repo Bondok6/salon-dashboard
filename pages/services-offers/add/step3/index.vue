@@ -117,7 +117,7 @@ export default {
               const end = new Date(this.form.endOffer);
               const startOfferDate = start.toISOString();
               const endOfferDate = end.toISOString();
-              const enabled = this.form.enabled === "true" ? true : false;
+              const enabled = this.enabled === "true" ? true : false;
               form3 = {
                 price: {
                   price: this.form.price,

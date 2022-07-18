@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Service</h2>
+    <h2 class="main-form__title">Update Service</h2>
 
     <div class="text-center my-5">
       <img src="@/assets/images/services/step3.png" alt="step3" />
@@ -53,10 +53,23 @@
           </el-date-picker>
         </el-form-item>
       </div>
+
+      <!-- show/hide from mobile app -->
+      <el-form-item prop="enabled">
+        <span class="d-block"
+          >Do you want to show this service in mobile app</span
+        >
+        <el-switch
+          v-model="enabled"
+          active-value="true"
+          inactive-value="false"
+          active-color="#EA3162"
+        ></el-switch>
+      </el-form-item>
     </el-form>
 
-    <button class="btn btn--pink btn--add" @click.prevent="createService()">
-      Save
+    <button class="btn btn--pink btn--add" @click.prevent="updateService()">
+      Update
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goBack()">
       Cancel
@@ -69,15 +82,14 @@ export default {
   async mounted() {
     const { id } = this.$route.params;
     const data = await this.$store.dispatch("services/fetchService", id);
+    this.form.price = data.price.price;
+    this.enabled = data.enabled === true ? "true" : "false";
+    console.log(data);
     if (data.price.priceAftereOffer) {
-      this.offer = true;
+      this.offer = "true";
       this.form.priceAfterDiscount = data.price.priceAftereOffer;
-      this.form.startOffer = data.price.startOffer;
-      this.form.endOffer = data.price.endOffer;
-      this.form.price = data.price.price;
-    } else {
-      this.offer = false;
-      this.form.price = data.price.price;
+      this.form.startOffer = data.price.startOfferDate;
+      this.form.endOffer = data.price.endOfferDate;
     }
   },
   data() {
@@ -97,9 +109,9 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push("/services-offers/add/step2");
+      this.$router.go(-1);
     },
-    createService() {
+    updateService() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           const loading = this.$loading();
@@ -107,12 +119,12 @@ export default {
             const form1 = JSON.parse(sessionStorage.getItem("form1"));
             const form2 = JSON.parse(sessionStorage.getItem("form2"));
             let form3 = {};
-            const enabled = this.offer === "true" ? true : false;
-            if (enabled) {
+            if (this.offer === "true") {
               const start = new Date(this.form.startOffer);
               const end = new Date(this.form.endOffer);
               const startOfferDate = start.toISOString();
               const endOfferDate = end.toISOString();
+              const enabled = this.enabled === "true" ? true : false;
               form3 = {
                 price: {
                   price: this.form.price,
@@ -135,18 +147,20 @@ export default {
               ...form1,
               ...form2,
               ...form3,
+              id: this.$route.params.id,
             };
 
             console.log(newService);
-            await this.$store.dispatch("services/addService", newService);
+
+            await this.$store.dispatch("services/updateService", newService);
             this.$router.push("/services-offers");
-            this.$message.success("Service created successfully");
+            this.$message.success("Service updated successfully");
 
             // clear session storage
             sessionStorage.removeItem("form1");
             sessionStorage.removeItem("form2");
           } catch (error) {
-            this.$message.error("Service Creation Failed");
+            this.$message.error("Service not updated");
           } finally {
             loading.close();
           }

@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Employees</h2>
+    <h2 class="main-form__title">Update Employee</h2>
 
     <el-form :rules="formRules" :model="form" ref="form" class="mt-5">
       <div class="d-flex align-items-center gap-4 mb-5">
@@ -37,7 +37,7 @@
           <el-input
             type="number"
             v-model="form.phone"
-            placeholder="(+20) 01555389225"
+            placeholder="(+973) 1555389225"
           >
           </el-input>
         </el-form-item>
@@ -56,7 +56,7 @@
       </el-form-item>
     </el-form>
 
-    <button class="btn btn--pink btn--add" @click.prevent="createEmp()">
+    <button class="btn btn--pink btn--add" @click.prevent="updateEmp()">
       Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
@@ -122,7 +122,7 @@ export default {
       this.form.image.pop();
       this.toggleUpload();
     },
-    createEmp() {
+    updateEmp() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.form.image.length > 0) {

@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Service</h2>
+    <h2 class="main-form__title">Update Service</h2>
 
     <div class="text-center my-5">
       <img src="@/assets/images/services/step1.png" alt="step1" />
@@ -108,7 +108,19 @@
 export default {
   async mounted() {
     const { id } = this.$route.params;
-    this.form = await this.$store.dispatch("services/fetchService", id);
+    const data = await this.$store.dispatch("services/fetchService", id);
+    this.form = {
+      nameEn: data.nameEn,
+      nameAr: data.nameAr,
+      nameHeb: data.nameHeb,
+      descriptionEn: data.descriptionEn,
+      descriptionAr: data.descriptionAr,
+      descriptionHeb: data.descriptionHeb,
+      numofsets: data.numofsets,
+      color: data.color,
+      images: data.images,
+    };
+    this.enabled = this.form.numofsets > 1 ? "true" : "false";
   },
   data() {
     return {
@@ -132,7 +144,7 @@ export default {
         color: [{ required: true, message: "Please pick a color" }],
       },
       showUpload: true,
-      enabled: "false",
+      enabled: null,
     };
   },
   methods: {
@@ -148,6 +160,9 @@ export default {
       });
     },
     async convertImagesToString(images) {
+      if (images.every((image) => typeof image === "string")) {
+        return;
+      }
       const fd = new FormData();
       images.forEach((image) => {
         fd.append("photos", image);

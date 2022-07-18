@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Service</h2>
+    <h2 class="main-form__title">Update Service</h2>
 
     <div class="text-center my-5">
       <img src="@/assets/images/services/step2.png" alt="step2" />
@@ -62,7 +62,11 @@ export default {
   async mounted() {
     this.validEmployees = await this.$store.dispatch("emp/fetchValidEmployees");
     const { id } = this.$route.params;
-    this.form = await this.$store.dispatch("services/fetchService", id);
+    const data = await this.$store.dispatch("services/fetchService", id);
+    this.form = {
+      employees: data.employees,
+      deuration: data.deuration,
+    };
     const [startTime, endTime] = await this.$store.dispatch(
       `working-hours/fetchWorkingHoursPerDay`
     );
@@ -78,13 +82,14 @@ export default {
         ],
       },
       validEmployees: [],
-      slots: [],
+      slots: null,
     };
   },
   methods: {
     goNext() {
       this.$refs.form.validate((valid) => {
         if (valid) {
+          this.form.employees = this.form.employees.map((emp) => emp.id);
           sessionStorage.setItem("form2", JSON.stringify(this.form));
           const { id } = this.$route.params;
           this.$router.push(`/services-offers/edit/step3/${id}`);

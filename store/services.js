@@ -13,6 +13,10 @@ export const mutations = {
   deleteService(state, id) {
     state.services = state.services.filter((s) => s.id !== id);
   },
+  updateService(state, service) {
+    const index = state.services.findIndex((s) => s.id === service.id);
+    state.services[index] = service;
+  },
 };
 
 // Actions
@@ -40,5 +44,13 @@ export const actions = {
   async deleteService({ commit }, id) {
     await this.$axios.$delete(`/services/${id}`);
     commit("deleteService", id);
+  },
+  async updateService({ commit }, service) {
+    console.log("Update Services Action");
+    console.log(service);
+    const { id } = service;
+    delete service.id;
+    await this.$axios.$patch(`/services/${id}`, service);
+    commit("updateService", service);
   },
 };
