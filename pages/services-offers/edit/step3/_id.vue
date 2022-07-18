@@ -53,19 +53,6 @@
           </el-date-picker>
         </el-form-item>
       </div>
-
-      <!-- show/hide from mobile app -->
-      <el-form-item prop="enabled">
-        <span class="d-block"
-          >Do you want to show this service in mobile app</span
-        >
-        <el-switch
-          v-model="enabled"
-          active-value="true"
-          inactive-value="false"
-          active-color="#EA3162"
-        ></el-switch>
-      </el-form-item>
     </el-form>
 
     <button class="btn btn--pink btn--add" @click.prevent="createService()">
@@ -79,14 +66,23 @@
 
 <script>
 export default {
+  async mounted() {
+    const { id } = this.$route.params;
+    const data = await this.$store.dispatch("services/fetchService", id);
+    if (data.price.priceAftereOffer) {
+      this.offer = true;
+      this.form.priceAfterDiscount = data.price.priceAftereOffer;
+      this.form.startOffer = data.price.startOffer;
+      this.form.endOffer = data.price.endOffer;
+      this.form.price = data.price.price;
+    } else {
+      this.offer = false;
+      this.form.price = data.price.price;
+    }
+  },
   data() {
     return {
-      form: {
-        price: "",
-        priceAfterDiscount: "",
-        startOffer: "",
-        endOffer: "",
-      },
+      form: {},
       formRules: {
         price: [{ required: true, message: "Please enter price" }],
         priceAfterDiscount: [
@@ -111,13 +107,12 @@ export default {
             const form1 = JSON.parse(sessionStorage.getItem("form1"));
             const form2 = JSON.parse(sessionStorage.getItem("form2"));
             let form3 = {};
-
-            if (this.offer === "true") {
+            const enabled = this.offer === "true" ? true : false;
+            if (enabled) {
               const start = new Date(this.form.startOffer);
               const end = new Date(this.form.endOffer);
               const startOfferDate = start.toISOString();
               const endOfferDate = end.toISOString();
-              const enabled = this.form.enabled === "true" ? true : false;
               form3 = {
                 price: {
                   price: this.form.price,

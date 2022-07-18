@@ -84,10 +84,16 @@
 }
 
 .discount {
-  color: #ea3162;
+  color: $color-primary;
   font-size: 1.6rem;
   font-weight: bold;
   padding: 0 1rem;
+}
+
+.prince-only {
+  color: #3d3d3d;
+  font-size: 1.6rem;
+  font-weight: bold;
 }
 
 .service-details {

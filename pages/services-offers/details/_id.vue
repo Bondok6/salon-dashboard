@@ -10,9 +10,12 @@
       </div>
       <div class="blog-cards__card-content">
         <h3 class="blog-cards__card-title">{{ service.nameEn }}</h3>
-        <p class="blog-cards__card-text">
-          <span class="price">${{ service.price.price }}</span>
-          <span class="discount">${{ service.price.priceAftereOffer }}</span>
+        <p class="blog-cards__card-text" v-if="service.enabled">
+          <span class="price">$ {{ service.price.price }}</span>
+          <span class="discount">$ {{ service.price.priceAftereOffer }}</span>
+        </p>
+        <p class="blog-cards__card-text" v-else>
+          <span class="prince-only">$ {{ service.price.price }}</span>
         </p>
       </div>
     </div>
@@ -65,7 +68,7 @@ export default {
   },
   methods: {
     goTo(id) {
-      this.$router.push(`/services/edit/${id}`);
+      this.$router.push(`/services-offers/edit/step1/${id}`);
     },
     deleteService(service) {
       this.$confirm(

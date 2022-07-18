@@ -10,15 +10,18 @@
       </div>
       <div class="blog-cards__card-content" @click="goToDetails(service.id)">
         <h3 class="blog-cards__card-title">{{ service.nameEn }}</h3>
-        <p class="blog-cards__card-text">
-          <span class="price">${{ service.price.price }}</span>
-          <span class="discount">${{ service.price.priceAftereOffer }}</span>
+        <p class="blog-cards__card-text" v-if="service.price.priceAftereOffer">
+          <span class="price">$ {{ service.price.price }}</span>
+          <span class="discount">$ {{ service.price.priceAftereOffer }}</span>
+        </p>
+        <p class="blog-cards__card-text" v-else>
+          <span class="prince-only">$ {{ service.price.price }}</span>
         </p>
       </div>
 
       <div class="blog-cards__card-buttons">
         <el-switch
-          :inactive-color="service.enabled === true ? '#ea3162' : '#ccc'"
+          :inactive-color="service.enabled ? '#ea3162' : '#ccc'"
           disabled
         ></el-switch>
         <img
