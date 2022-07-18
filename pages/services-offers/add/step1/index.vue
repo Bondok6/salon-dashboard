@@ -17,7 +17,7 @@
           :class="{ hideUpload: !showUpload }"
           :show-file-list="true"
           :auto-upload="false"
-          :limit="1"
+          :limit="4"
           accept="image/*"
         >
           <i class="el-icon-upload"></i>
@@ -159,21 +159,34 @@ export default {
     toggleUpload() {
       this.showUpload = !this.showUpload;
     },
-    handleChange(file) {
-      this.form.images.push(file.raw);
-      this.toggleUpload();
+    handleChange(_, fileList) {
+      this.form.images = fileList.map((file) => file.raw);
     },
-    handleRemove() {
-      this.form.images.pop();
-      this.toggleUpload();
+    handleRemove(file) {
+      this.form.images = this.form.images.filter((item) => {
+        return item.uid !== file.uid;
+      });
+    },
+    async convertImagesToString(images) {
+      const fd = new FormData();
+      images.forEach((image) => {
+        fd.append("photos", image);
+      });
+      const res = await this.$axios.$post("/photos", fd);
+      console.log(res);
+      return res.map((image) => image.url);
     },
     goNext() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          if (this.form.images.length == 0) {
+          if (this.form.images.length === 0) {
             this.$message.error("Please upload image");
             return;
           }
+          if (this.enabled === "false") {
+            this.form.numofsets = 1;
+          }
+          this.form.images = await this.convertImagesToString(this.form.images);
           sessionStorage.setItem("form1", JSON.stringify(this.form));
           this.$router.push("/services-offers/add/step2");
         }
@@ -181,7 +194,8 @@ export default {
     },
     goBack() {
       // remove data from sessionStorage
-      sessionStorage.removeItem("form1", "form2");
+      sessionStorage.removeItem("form1");
+      sessionStorage.removeItem("form2");
       this.$router.push("/services-offers");
     },
   },

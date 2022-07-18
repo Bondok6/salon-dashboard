@@ -40,12 +40,12 @@
       <img
         src="@/assets/images/blogs/edit-bg.png"
         alt="edit-icon"
-        @click="goTo(blog.id)"
+        @click="goTo(service.id)"
       />
       <img
         src="@/assets/images/blogs/delete-bg.png"
         alt="delete-icon"
-        @click="deleteBlog(blog)"
+        @click="deleteService(service)"
       />
     </div>
   </section>
@@ -66,6 +66,31 @@ export default {
   methods: {
     goTo(id) {
       this.$router.push(`/services/edit/${id}`);
+    },
+    deleteService(service) {
+      this.$confirm(
+        `Are you sure you want to delete '${service.nameEn}' service?`,
+        "Warning",
+        {
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          type: "warning",
+        }
+      )
+        .then(async () => {
+          await this.$store.dispatch("services/deleteService", service.id);
+          this.$router.push("/services-offers");
+          this.$message({
+            type: "success",
+            message: "Delete completed",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Delete canceled",
+          });
+        });
     },
   },
 };

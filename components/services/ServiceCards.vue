@@ -29,7 +29,7 @@
         <img
           src="@/assets/images/blogs/delete.png"
           alt="delete-icon"
-          @click="deleteBlog(service)"
+          @click="deleteService(service)"
         />
       </div>
     </li>
@@ -45,7 +45,10 @@ export default {
     },
   },
   methods: {
-    deleteBlog(service) {
+    goToDetails(id) {
+      this.$router.push(`/services-offers/details/${id}`);
+    },
+    deleteService(service) {
       this.$confirm(
         `Are you sure you want to delete '${service.nameEn}' service?`,
         "Warning",
@@ -58,18 +61,17 @@ export default {
         .then(async () => {
           await this.$store.dispatch("services/deleteService", service.id);
           this.$message({
+            message: "Service deleted successfully",
             type: "success",
-            message: "Delete completed",
           });
+          this.$router.push("/services-offers");
         })
         .catch(() => {
           this.$message({
-            type: "info",
+            message: "Service not deleted",
+            type: "error",
           });
         });
-    },
-    goToDetails(id) {
-      this.$router.push(`/services-offers/details/${id}`);
     },
   },
 };

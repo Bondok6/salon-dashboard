@@ -61,6 +61,10 @@
 export default {
   async mounted() {
     this.validEmployees = await this.$store.dispatch("emp/fetchValidEmployees");
+    this.form = JSON.parse(sessionStorage.getItem("form2")) || {
+      employees: [],
+      deuration: 0,
+    };
   },
   data() {
     return {
@@ -91,10 +95,10 @@ export default {
       this.$router.push("/services-offers/add/step1");
     },
     async handleChange(duration) {
-      console.log(duration);
       const [startTime, endTime] = await this.$store.dispatch(
         `working-hours/fetchWorkingHoursPerDay`
       );
+      console.log(startTime, endTime);
       this.slots = this.generateSlots(startTime, endTime, duration);
     },
     generateSlots(start, end, duration) {
@@ -117,10 +121,12 @@ export default {
   padding: 1rem;
   background: #fafafa;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 
   &__title {
     font-size: 1.5rem;
+    margin: 1rem 0;
   }
 
   &__items {

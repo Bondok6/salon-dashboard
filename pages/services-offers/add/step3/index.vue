@@ -15,18 +15,19 @@
             :controls="false"
           ></el-input-number>
         </el-form-item>
-        <!-- Switch -->
+
         <el-form-item prop="offer">
           <span class="d-block">Offer</span>
           <el-switch
             v-model="offer"
-            active-value="1"
-            inactive-value="0"
+            active-value="true"
+            inactive-value="false"
             active-color="#EA3162"
           ></el-switch>
         </el-form-item>
       </div>
-      <div v-if="offer == '1'" class="d-flex justify-content-around">
+
+      <div v-if="offer === 'true'" class="d-flex justify-content-around">
         <el-form-item label="Price After Discount" prop="priceAfterDiscount">
           <el-input-number
             v-model="form.priceAfterDiscount"
@@ -81,8 +82,7 @@ export default {
         startOffer: [{ required: true, message: "Please enter start time" }],
         endOffer: [{ required: true, message: "Please enter end time" }],
       },
-      offer: "",
-      newService: {},
+      offer: "false",
     };
   },
   methods: {
@@ -90,21 +90,59 @@ export default {
       this.$router.push("/services-offers/add/step2");
     },
     createService() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          const form1 = JSON.parse(sessionStorage.getItem("form1"));
-          const form2 = JSON.parse(sessionStorage.getItem("form2"));
-          this.newService = {
-            ...form1,
-            ...form2,
-            ...this.form,
-          };
-          console.log(this.newService);
+          const loading = this.$loading();
+          try {
+            const form1 = JSON.parse(sessionStorage.getItem("form1"));
+            const form2 = JSON.parse(sessionStorage.getItem("form2"));
+            let form3 = {};
+            const enabled = this.offer === "true" ? true : false;
+            if (enabled) {
+              const start = new Date(this.form.startOffer);
+              const end = new Date(this.form.endOffer);
+              const startOfferDate = start.toISOString();
+              const endOfferDate = end.toISOString();
+              form3 = {
+                price: {
+                  price: this.form.price,
+                  priceAftereOffer: this.form.priceAfterDiscount,
+                  startOfferDate,
+                  endOfferDate,
+                },
+                enabled,
+              };
+            } else {
+              form3 = {
+                price: {
+                  price: this.form.price,
+                },
+                enabled,
+              };
+            }
+
+            const newService = {
+              ...form1,
+              ...form2,
+              ...form3,
+            };
+
+            console.log(newService);
+            await this.$store.dispatch("services/addService", newService);
+            this.$router.push("/services-offers");
+            this.$message.success("Service created successfully");
+
+            // clear session storage
+            sessionStorage.removeItem("form1");
+            sessionStorage.removeItem("form2");
+          } catch (error) {
+            this.$message.error("Service Creation Failed");
+          } finally {
+            loading.close();
+          }
         }
       });
     },
   },
 };
 </script>
-
-<style></style>
