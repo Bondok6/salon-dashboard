@@ -1,9 +1,9 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" class="p-5 w-100">
     <div class="blog-cards__card w-75 border-0">
-      <div>
+      <div v-for="(img, index) in service.images" :key="index">
         <img
-          :src="service.images[0]"
+          :src="img"
           alt="service image"
           class="blog-cards__card-image img--detials"
         />

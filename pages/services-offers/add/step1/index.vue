@@ -119,20 +119,11 @@ export default {
       color: "#F8AF03s",
       images: [],
     };
+    if (this.form.numofsets > 1) this.enabled = "true";
   },
   data() {
     return {
-      form: {
-        nameEn: "",
-        nameAr: "",
-        nameHeb: "",
-        descriptionEn: "",
-        descriptionAr: "",
-        descriptionHeb: "",
-        numofsets: "",
-        color: "#F8AF03s",
-        images: [],
-      },
+      form: {},
       formRules: {
         nameEn: [{ required: true, message: "Please enter name in English" }],
         nameAr: [{ required: true, message: "Please enter name in Arabic" }],
@@ -186,7 +177,11 @@ export default {
           if (this.enabled === "false") {
             this.form.numofsets = 1;
           }
-          this.form.images = await this.convertImagesToString(this.form.images);
+          if (this.form.images.every((image) => typeof image !== "string")) {
+            this.form.images = await this.convertImagesToString(
+              this.form.images
+            );
+          }
           sessionStorage.setItem("form1", JSON.stringify(this.form));
           this.$router.push("/services-offers/add/step2");
         }

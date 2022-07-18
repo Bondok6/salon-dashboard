@@ -52,7 +52,7 @@
       Next
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goBack()">
-      Cancel
+      Previous
     </button>
   </section>
 </template>
@@ -65,13 +65,15 @@ export default {
       employees: [],
       deuration: 0,
     };
+    const [startTime, endTime] = await this.$store.dispatch(
+      `working-hours/fetchWorkingHoursPerDay`
+    );
+    console.log(startTime, endTime);
+    this.slots = this.generateSlots(startTime, endTime, this.form.deuration);
   },
   data() {
     return {
-      form: {
-        employees: [],
-        deuration: "",
-      },
+      form: {},
       formRules: {
         employees: [{ required: true, message: "Please select employees" }],
         deuration: [

@@ -120,7 +120,10 @@ export default {
       color: data.color,
       images: data.images,
     };
-    this.enabled = this.form.numofsets > 1 ? "true" : "false";
+
+    console.log(this.form);
+
+    if (this.form.numofsets > 1) this.enabled = "true";
   },
   data() {
     return {
@@ -181,7 +184,12 @@ export default {
           if (this.enabled === "false") {
             this.form.numofsets = 1;
           }
-          this.form.images = await this.convertImagesToString(this.form.images);
+          if (this.form.images.every((image) => typeof image !== "string")) {
+            this.form.images = await this.convertImagesToString(
+              this.form.images
+            );
+          }
+
           sessionStorage.setItem("form1", JSON.stringify(this.form));
           const { id } = this.$route.params;
           this.$router.push(`/services-offers/edit/step2/${id}`);

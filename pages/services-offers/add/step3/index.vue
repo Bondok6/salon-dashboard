@@ -72,7 +72,7 @@
       Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goBack()">
-      Cancel
+      Previous
     </button>
   </section>
 </template>
