@@ -76,3 +76,37 @@
     }
   }
 }
+
+// Services&Offers
+.price {
+  text-decoration: line-through;
+  font-size: 1.6rem;
+}
+
+.discount {
+  color: $color-primary;
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 0 1rem;
+}
+
+.prince-only {
+  color: #3d3d3d;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.service-details {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+
+  .key {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  .value {
+    color: #9a9a9a;
+    font-size: 1.8rem;
+  }
+}

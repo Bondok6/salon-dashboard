@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Add Employees</h2>
+    <h2 class="main-form__title">Add User</h2>
 
     <el-form :rules="formRules" :model="form" ref="form" class="mt-5">
       <div class="d-flex align-items-center gap-4 mb-5">
@@ -19,18 +19,14 @@
           <i class="el-icon-upload"></i>
         </el-upload>
         <div class="img-caption">
-          <h5>Employee image</h5>
+          <h5>Image Of User</h5>
           <h6>Please Upload Image 160*160</h6>
         </div>
       </div>
 
       <div class="d-flex flex-wrap gap-5 mb-4">
-        <el-form-item
-          label="Name of Employee"
-          prop="empName"
-          style="width: 500px"
-        >
-          <el-input v-model="form.empName"></el-input>
+        <el-form-item label="User Name" prop="userName" style="width: 500px">
+          <el-input v-model="form.userName"></el-input>
         </el-form-item>
 
         <el-form-item label="Phone" prop="phone" style="width: 500px">
@@ -43,20 +39,30 @@
         </el-form-item>
       </div>
 
-      <el-form-item label="Attendance" prop="attendent">
-        <el-select v-model="form.attendent" placeholder="Select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+      <div class="d-flex flex-wrap gap-5 mb-4">
+        <el-form-item prop="password" label="Password" style="width: 500px">
+          <el-input v-model="form.password" type="password" show-password />
+        </el-form-item>
+
+        <el-form-item label="Role" prop="role">
+          <el-select
+            v-model="form.role"
+            placeholder="Select Role"
+            style="width: 500px"
           >
-          </el-option>
-        </el-select>
-      </el-form-item>
+            <el-option
+              v-for="role in roleOptions"
+              :key="role.value"
+              :label="role.label"
+              :value="role.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </div>
     </el-form>
 
-    <button class="btn btn--pink btn--add" @click.prevent="createEmp()">
+    <button class="btn btn--pink btn--add" @click.prevent="createUser()">
       Save
     </button>
     <button class="btn btn--white btn--add" @click.prevent="goTo()">
@@ -70,39 +76,28 @@ export default {
   data() {
     return {
       form: {
-        empName: "",
-        phone: "",
-        attendent: "",
         image: [],
+        userName: "",
+        phone: "",
+        password: "",
+        role: "",
       },
       formRules: {
-        empName: [
-          {
-            required: true,
-            message: "Please input name of employee",
-          },
+        userName: [
+          { required: true, message: "Please input name of employee" },
         ],
-        phone: [
-          {
-            required: true,
-            message: "Please input phone number",
-          },
-        ],
-        attendent: [
-          {
-            required: true,
-            message: "Please select attendant",
-          },
-        ],
+        phone: [{ required: true, message: "Please input phone number" }],
+        password: [{ required: true, message: "Please input password" }],
+        role: [{ required: true, message: "Please select a role" }],
       },
-      options: [
+      roleOptions: [
         {
-          value: "PRESENT",
-          label: "Present",
+          value: "ADMIN",
+          label: "Admin",
         },
         {
-          value: "ABSENT",
-          label: "Absent",
+          value: "EMPLOYEE",
+          label: "Employee",
         },
       ],
       showUpload: true,
@@ -120,7 +115,7 @@ export default {
       this.form.image.pop();
       this.toggleUpload();
     },
-    createEmp() {
+    createUser() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.form.image.length === 0) {
@@ -129,11 +124,11 @@ export default {
           }
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("emp/addEmployee", this.form);
-            this.$message.success("Employee Created Successfully");
-            this.$router.push("/employees");
+            await this.$store.dispatch("admin/addUser", this.form);
+            this.$message.success("User Created Successfully");
+            this.$router.push("/admins");
           } catch (error) {
-            this.$message.error("Employee Creation Failed");
+            this.$message.error("User Creation Failed");
           } finally {
             loading.close();
           }
@@ -141,7 +136,7 @@ export default {
       });
     },
     goTo() {
-      this.$router.push("/employees");
+      this.$router.push("/admins");
     },
   },
 };
