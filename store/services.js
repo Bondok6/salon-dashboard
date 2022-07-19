@@ -46,8 +46,6 @@ export const actions = {
     commit("deleteService", id);
   },
   async updateService({ commit }, service) {
-    console.log("Update Services Action");
-    console.log(service);
     const { id } = service;
     delete service.id;
     await this.$axios.$patch(`/services/${id}`, service);

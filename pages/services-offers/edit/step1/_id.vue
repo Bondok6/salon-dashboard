@@ -121,8 +121,6 @@ export default {
       images: data.images,
     };
 
-    console.log(this.form);
-
     if (this.form.numofsets > 1) this.enabled = "true";
   },
   data() {
@@ -171,7 +169,6 @@ export default {
         fd.append("photos", image);
       });
       const res = await this.$axios.$post("/photos", fd);
-      console.log(res);
       return res.map((image) => image.url);
     },
     goNext() {

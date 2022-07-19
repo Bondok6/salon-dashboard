@@ -174,7 +174,6 @@ export default {
         fd.append("photos", image);
       });
       const res = await this.$axios.$post("/photos", fd);
-      console.log(res);
       return res.map((image) => image.url);
     },
     goNext() {

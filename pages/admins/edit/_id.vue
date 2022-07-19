@@ -126,7 +126,6 @@ export default {
           }
           const loading = this.$loading();
           try {
-            console.log(this.form);
             await this.$store.dispatch("admin/updateUser", this.form);
             this.$message.success("User Updated Successfully");
             this.$router.push("/admins");

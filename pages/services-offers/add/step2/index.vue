@@ -98,7 +98,6 @@ export default {
       const [startTime, endTime] = await this.$store.dispatch(
         `working-hours/fetchWorkingHoursPerDay`
       );
-      console.log(startTime, endTime);
       this.slots = this.generateSlots(startTime, endTime, duration);
     },
     generateSlots(start, end, duration) {

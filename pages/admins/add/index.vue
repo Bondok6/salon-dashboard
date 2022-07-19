@@ -124,7 +124,6 @@ export default {
           }
           const loading = this.$loading();
           try {
-            // console.log(this.form);
             await this.$store.dispatch("admin/addUser", this.form);
             this.$message.success("User Created Successfully");
             this.$router.push("/admins");

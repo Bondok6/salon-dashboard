@@ -142,7 +142,6 @@ export default {
               ...form3,
             };
 
-            console.log(newService);
             await this.$store.dispatch("services/addService", newService);
             this.$router.push("/services-offers");
             this.$message.success("Service created successfully");

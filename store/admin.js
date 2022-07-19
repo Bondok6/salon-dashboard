@@ -32,9 +32,7 @@ export const actions = {
     fd.append("photos", user.image[0]);
     const res = await this.$axios.$post("/photos", fd);
     const userObj = { ...user, profile: res[0].url };
-    console.log({ userObj });
     const newUser = await this.$axios.$post("/users/add/employees", userObj);
-    console.log({ newUser });
     commit("addUser", newUser);
   },
   async deleteUser({ commit }, id) {

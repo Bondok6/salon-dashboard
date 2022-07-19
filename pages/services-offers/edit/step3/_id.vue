@@ -84,7 +84,6 @@ export default {
     const data = await this.$store.dispatch("services/fetchService", id);
     this.form.price = data.price.price;
     this.enabled = data.enabled === true ? "true" : "false";
-    console.log(data);
     if (data.price.priceAftereOffer) {
       this.offer = "true";
       this.form.priceAfterDiscount = data.price.priceAftereOffer;
@@ -150,8 +149,6 @@ export default {
               ...form3,
               id: this.$route.params.id,
             };
-
-            console.log(newService);
 
             await this.$store.dispatch("services/updateService", newService);
             this.$router.push("/services-offers");
