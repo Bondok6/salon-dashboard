@@ -65,15 +65,13 @@ export default {
       employees: [],
       deuration: 0,
     };
-    const [startTime, endTime] = await this.$store.dispatch(
-      `working-hours/fetchWorkingHoursPerDay`
-    );
-    console.log(startTime, endTime);
-    this.slots = this.generateSlots(startTime, endTime, this.form.deuration);
   },
   data() {
     return {
-      form: {},
+      form: {
+        employees: [],
+        deuration: 0,
+      },
       formRules: {
         employees: [{ required: true, message: "Please select employees" }],
         deuration: [

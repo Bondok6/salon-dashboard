@@ -116,14 +116,24 @@ export default {
       descriptionAr: "",
       descriptionHeb: "",
       numofsets: "",
-      color: "#F8AF03s",
+      color: "#F8AF03",
       images: [],
     };
     if (this.form.numofsets > 1) this.enabled = "true";
   },
   data() {
     return {
-      form: {},
+      form: {
+        nameEn: "",
+        nameAr: "",
+        nameHeb: "",
+        descriptionEn: "",
+        descriptionAr: "",
+        descriptionHeb: "",
+        numofsets: "",
+        color: "#F8AF03",
+        images: [],
+      },
       formRules: {
         nameEn: [{ required: true, message: "Please enter name in English" }],
         nameAr: [{ required: true, message: "Please enter name in Arabic" }],

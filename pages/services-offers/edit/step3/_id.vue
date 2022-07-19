@@ -117,6 +117,7 @@ export default {
           const loading = this.$loading();
           try {
             const form1 = JSON.parse(sessionStorage.getItem("form1"));
+            form1.numofsets = +form1.numofsets;
             const form2 = JSON.parse(sessionStorage.getItem("form2"));
             let form3 = {};
             if (this.offer === "true") {
