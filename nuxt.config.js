@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "spa-dashboard",
+    title: "Amany Dashboard",
     htmlAttrs: {
       lang: "en",
     },
