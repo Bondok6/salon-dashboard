@@ -132,11 +132,9 @@ export default {
       this.showFilter = !this.showFilter;
     },
     dateFilter() {
-      console.log(this.dateInput);
       this.toggleCalender();
     },
     statusFilter() {
-      console.log(this.statusInput);
       this.toggleFilter();
     },
   },

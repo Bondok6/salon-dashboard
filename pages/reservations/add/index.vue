@@ -238,7 +238,6 @@ export default {
               day: this.form.day.toISOString(),
               slot: dateTimeIso,
             };
-            console.log(newReservation);
             this.$message.success("Reservation Created Successfully");
             // this.$router.push("/reservations");
           } catch (error) {
