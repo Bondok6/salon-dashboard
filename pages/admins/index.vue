@@ -8,7 +8,7 @@
       caption="No users have been added yet."
     />
 
-    <adminUsersList :tableData="users" />
+    <adminList :tableData="users" />
   </section>
 </template>
 
