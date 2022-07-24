@@ -124,7 +124,9 @@
             src="@/assets/images/sidebar/settings/world.png"
             alt="world-icon"
           />
-          <router-link to="/cites" class="sidebar-nav__link">Cites</router-link>
+          <router-link to="/cities" class="sidebar-nav__link"
+            >Cities</router-link
+          >
         </li>
         <li class="sidebar-nav__item">
           <img
