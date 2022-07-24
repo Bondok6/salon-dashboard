@@ -19,7 +19,7 @@
     >
       <el-calendar v-model="dateInput" class="calender"> </el-calendar>
       <button type="submit" class="popupBtn" @click.prevent="dateFilter">
-        تأكيد
+        Filter
       </button>
     </uiPopupForm>
 
@@ -29,23 +29,52 @@
       :modalTrigger="showFilter"
       @update:modalTrigger="toggleFilter"
     >
-      <el-select
-        v-model="statusInput"
-        @change="statusFilter"
-        placeholder="Select Status"
+      <el-form
+        :rules="formRules"
+        :model="form"
+        ref="form"
+        class="p-3"
+        style="width: 500px"
       >
-        <el-option
-          v-for="item in statusOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          class="text-center"
-        >
-        </el-option>
-      </el-select>
+        <el-form-item label="Status" prop="status">
+          <el-select
+            v-model="form.status"
+            @change="statusFilter"
+            placeholder="Select Status"
+            class="w-100"
+          >
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="text-center"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="From" prop="startDate">
+          <el-date-picker
+            v-model="form.startDate"
+            type="date"
+            placeholder="Pick a day"
+            class="w-100"
+          >
+          </el-date-picker>
+        </el-form-item>
 
-      <button type="submit" class="popupBtn" @click.prevent="filter">
-        تأكيد
+        <el-form-item label="To" prop="endDate">
+          <el-date-picker
+            v-model="form.endDate"
+            type="date"
+            placeholder="Pick a day"
+            class="w-100"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <button type="submit" class="popupBtn" @click.prevent="statusFilter">
+        Filter
       </button>
     </uiPopupForm>
 
@@ -69,7 +98,7 @@
       background
       layout="prev, pager, next"
       :current-page.sync="page"
-      @current-change="fetchReservations"
+      @current-change="chooseFilter"
       :total="totalPages * 10"
     >
     </el-pagination>
@@ -86,7 +115,16 @@ export default {
       showCalender: false,
       showFilter: false,
       dateInput: null,
-      statusInput: null,
+      form: {
+        status: null,
+        startDate: null,
+        endDate: null,
+      },
+      formRules: {
+        status: [{ required: true, message: "Please select a status" }],
+        startDate: [{ required: true, message: "Please pick a start date" }],
+        endDate: [{ required: true, message: "Please pick an end date" }],
+      },
       statusOptions: [
         {
           value: "ACCEPTED",
@@ -109,6 +147,7 @@ export default {
           label: "Rejected",
         },
       ],
+      filterType: "",
     };
   },
   async mounted() {
@@ -134,8 +173,43 @@ export default {
     dateFilter() {
       this.toggleCalender();
     },
+    async filterByStatus() {
+      let params = {
+        page: this.page,
+        limit: 5,
+        status: this.form.status,
+        startDate: this.form.startDate.toISOString(),
+        endDate: this.form.endDate.toISOString(),
+      };
+      const response = await this.$axios.$get("/reservations", {
+        params,
+      });
+      this.reservations = await response.docs;
+      this.totalPages = await response.totalPages;
+      this.page = await response.page;
+    },
     statusFilter() {
-      this.toggleFilter();
+      this.$refs.form.validate(async (valid) => {
+        if (valid) {
+          const loading = this.$loading();
+          try {
+            await this.filterByStatus();
+            this.toggleFilter();
+            this.filterType = "status";
+          } catch (error) {
+            this.$message.error("Something went wrong");
+          } finally {
+            loading.close();
+          }
+        }
+      });
+    },
+    async chooseFilter() {
+      if (this.filterType == "status") {
+        await this.filterByStatus();
+      } else {
+        await this.fetchReservations();
+      }
     },
   },
   computed: {
