@@ -1,7 +1,7 @@
 <template>
   <ul class="about">
     <li v-for="info in info" :key="info._id" class="about__info">
-      <div class="about__info-left">
+      <div class="data">
         <div>
           <h4>Title</h4>
           <p>{{ info.titleEn }}</p>
@@ -11,21 +11,22 @@
           <p class="description">{{ info.contentEn }}</p>
         </div>
       </div>
-      <div class="about__info-right">
-        <div class="blog-cards__card-buttons">
-          <img
-            src="@/assets/images/blogs/edit.png"
-            alt="edit-icon"
-            @click="goTo(city.id)"
-            class="px-2"
-          />
-          <img
-            src="@/assets/images/blogs/delete.png"
-            alt="delete-icon"
-            @click="deleteCity(city)"
-            class="px-3"
-          />
-        </div>
+
+      <div class="options">
+        <img
+          src="@/assets/images/blogs/edit.png"
+          alt="edit-icon"
+          @click="goTo(info._id)"
+          class="px-2"
+          role="button"
+        />
+        <img
+          src="@/assets/images/blogs/delete.png"
+          alt="delete-icon"
+          @click="deleteInfo(info)"
+          class="pe-4"
+          role="button"
+        />
       </div>
     </li>
   </ul>
@@ -39,6 +40,34 @@ export default {
       required: true,
     },
   },
+  methods: {
+    deleteInfo(info) {
+      this.$confirm(
+        `Are you sure you want to delete '${info.titleEn}'?`,
+        "Warning",
+        {
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          type: "warning",
+        }
+      )
+        .then(async () => {
+          await this.$store.dispatch("about/deleteInfo", info._id);
+          this.$message({
+            type: "success",
+            message: "Delete completed",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+          });
+        });
+    },
+    goTo(id) {
+      this.$router.push(`/about/edit/${id}`);
+    },
+  },
 };
 </script>
 
@@ -50,13 +79,19 @@ export default {
   align-items: center;
   margin-top: 1rem;
 
-  h4 {
-    font-size: 1.4rem;
-  }
+  .data {
+    width: 90%;
+    h4 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
 
-  p {
-    font-size: 1.6rem;
-    padding-left: 1rem;
+    p {
+      font-size: 1.6rem;
+      padding-left: 1rem;
+      text-align: justify;
+    }
   }
 }
 </style>
