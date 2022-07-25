@@ -70,7 +70,6 @@ export default {
           const loading = this.$loading();
           try {
             const newInfo = { about: [this.form] };
-            console.log(newInfo);
             await this.$store.dispatch("about/addInfo", newInfo);
             this.$message.success("Info created successfully");
             this.$router.push("/about");
