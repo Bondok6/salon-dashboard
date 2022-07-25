@@ -37,8 +37,8 @@
 
 <script>
 export default {
-  async mounted() {
-    // fetch info by id
+  mounted() {
+    this.form = this.data;
   },
   data() {
     return {
@@ -46,7 +46,7 @@ export default {
       formRules: {
         titleEn: [{ required: true, message: "Please input title in English" }],
         titleAr: [{ required: true, message: "Please input title in Arabic" }],
-        titleHep: [{ required: true, message: "Please input title in Hebrew" }],
+        titleHeb: [{ required: true, message: "Please input title in Hebrew" }],
         contentEn: [
           { required: true, message: "Please input content in English" },
         ],
@@ -65,7 +65,8 @@ export default {
         if (valid) {
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("about/updateInfo", this.form);
+            const upatedInfo = { about: [this.form] };
+            await this.$axios.$patch(`/about/${this.id}`, upatedInfo);
             this.$message.success("Info updated successfully");
             this.$router.push("/about");
           } catch (error) {
@@ -78,6 +79,14 @@ export default {
     },
     goTo() {
       this.$router.push("/about");
+    },
+  },
+  computed: {
+    data() {
+      return { ...this.$store.state.about.info[0] };
+    },
+    id() {
+      return this.$store.state.about.aboutId;
     },
   },
 };

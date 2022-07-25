@@ -42,15 +42,15 @@ export default {
       form: {
         titleEn: "",
         titleAr: "",
-        titleHep: "",
+        titleHeb: "",
         contentAr: "",
         contentEn: "",
-        contentheb: "",
+        contentHeb: "",
       },
       formRules: {
         titleEn: [{ required: true, message: "Please input title in English" }],
         titleAr: [{ required: true, message: "Please input title in Arabic" }],
-        titleHep: [{ required: true, message: "Please input title in Hebrew" }],
+        titleHeb: [{ required: true, message: "Please input title in Hebrew" }],
         contentEn: [
           { required: true, message: "Please input content in English" },
         ],
@@ -69,7 +69,9 @@ export default {
         if (valid) {
           const loading = this.$loading();
           try {
-            await this.$store.dispatch("about/addInfo", this.form);
+            const newInfo = { about: [this.form] };
+            console.log(newInfo);
+            await this.$store.dispatch("about/addInfo", newInfo);
             this.$message.success("Info created successfully");
             this.$router.push("/about");
           } catch (error) {

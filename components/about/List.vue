@@ -16,8 +16,8 @@
         <img
           src="@/assets/images/blogs/edit.png"
           alt="edit-icon"
-          @click="goTo(info._id)"
-          class="px-2"
+          @click="goTo()"
+          class="px-3"
           role="button"
         />
         <img
@@ -41,9 +41,12 @@ export default {
     },
   },
   methods: {
+    goTo() {
+      this.$router.push("/about/edit");
+    },
     deleteInfo(info) {
       this.$confirm(
-        `Are you sure you want to delete '${info.titleEn}'?`,
+        `Are you sure you want to delete '${info.titleEn}' info?`,
         "Warning",
         {
           confirmButtonText: "Confirm",
@@ -52,7 +55,8 @@ export default {
         }
       )
         .then(async () => {
-          await this.$store.dispatch("about/deleteInfo", info._id);
+          await this.$axios.$delete(`/about/${this.aboutId}`);
+          await this.$store.dispatch("about/fetchAllInfo");
           this.$message({
             type: "success",
             message: "Delete completed",
@@ -64,8 +68,10 @@ export default {
           });
         });
     },
-    goTo(id) {
-      this.$router.push(`/about/edit/${id}`);
+  },
+  computed: {
+    aboutId() {
+      return this.$store.state.about.aboutId || "";
     },
   },
 };

@@ -8,7 +8,7 @@
       caption="No inforamtion have been added yet."
     />
 
-    <aboutList :info="info" />
+    <aboutList :info="info" :aboutId="aboutId" />
   </section>
 </template>
 
@@ -24,7 +24,10 @@ export default {
   },
   computed: {
     info() {
-      return this.$store.state.about.info;
+      return this.$store.state.about.info || [];
+    },
+    aboutId() {
+      return this.$store.state.about.aboutId || "";
     },
   },
 };
