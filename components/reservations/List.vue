@@ -1,16 +1,10 @@
 <template>
   <el-table
-    :data="
-      tableData.filter(
-        (data) =>
-          !search ||
-          data.firstName.toLowerCase().includes(search.toLowerCase()) ||
-          data.lastName.toLowerCase().includes(search.toLowerCase())
-      )
-    "
+    :data="tableData"
     class="table-striped text-center"
     border
     :cell-style="cellStyle"
+    @current-change="handleCurrentChange"
   >
     <el-table-column label="ID" type="index" align="center"> </el-table-column>
 
@@ -48,19 +42,6 @@
         </span>
       </template>
     </el-table-column>
-
-    <el-table-column align="right">
-      <template slot="header" slot-scope="scope">
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
-      </template>
-      <template slot-scope="scope">
-        <img
-          src="@/assets/images/emp/edit.png"
-          style="width: 30px; cursor: pointer"
-          @click="handleEdit(scope.$index, scope.row)"
-        />
-      </template>
-    </el-table-column>
   </el-table>
 </template>
 
@@ -78,9 +59,6 @@ export default {
     };
   },
   methods: {
-    handleEdit(_, row) {
-      this.$router.push(`/employees/edit/${row.id}`);
-    },
     cellStyle({ row, _, columnIndex }) {
       if (row.status === "ACCEPTED" && columnIndex === 4)
         return { color: "#00CFE8" };
@@ -93,6 +71,10 @@ export default {
       if (row.status === "REJECTED" && columnIndex === 4)
         return { color: "#ff0000" };
       return "";
+    },
+    handleCurrentChange(val) {
+      const { id } = val;
+      this.$router.push(`/reservations/details/${id}`);
     },
   },
 };
