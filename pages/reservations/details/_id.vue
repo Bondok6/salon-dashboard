@@ -144,7 +144,7 @@
       class="text-center"
     >
       <el-select
-        v-model="empolyee"
+        v-model="employee"
         filterable
         placeholder="select an employee"
         class="w-75 my-5"
@@ -242,7 +242,7 @@ export default {
       showPopup: false,
       showEmpPopup: false,
       validEmployees: [],
-      empolyee: null,
+      employee: null,
     };
   },
   computed: {
@@ -292,7 +292,7 @@ export default {
       });
     },
     async editEmployee() {
-      if (!this.empolyee) {
+      if (!this.employee) {
         this.$message.error("Please select an employee");
         return;
       }
@@ -300,7 +300,7 @@ export default {
       try {
         const { id } = this.$route.params;
         await this.$axios.patch(`/reservations/${id}/update`, {
-          empolyee: this.empolyee,
+          empolyee: this.employee,
         });
         this.$message.success("Employee assigned successfully");
         this.showEmpPopup = false;
@@ -316,88 +316,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-section {
-  .header {
-    display: flex;
-    align-items: center;
-
-    h2 {
-      color: #000;
-      font-size: 1.6rem;
-      padding: 0.5rem;
-
-      span {
-        color: #ea3162;
-        font-size: 1.8rem;
-      }
-    }
-
-    .btn {
-      position: absolute;
-      right: 1rem;
-      top: 0;
-      &--details {
-        width: 15rem;
-        padding: 1rem 0;
-        font-size: 1.5rem;
-      }
-    }
-  }
-  .content {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-
-    &__left {
-      width: 75%;
-    }
-
-    &__right {
-      width: 25%;
-      border: 1px solid #ebe9f1;
-      border-radius: 1rem;
-
-      .heading {
-        color: #ea3162;
-        font-size: 1.7rem;
-        font-weight: bold;
-        background-color: #fafafa;
-        padding: 0.5rem 1rem;
-      }
-      .info,
-      .info h6 {
-        font-size: 1.5rem;
-        color: #9a9a9a;
-        padding: 0.5rem 1rem;
-
-        h6 span {
-          font-size: 1.7rem;
-          color: #000;
-          padding-right: 1rem;
-        }
-      }
-    }
-
-    .note {
-      padding: 0.5rem 1rem;
-      background-color: #fafafa;
-      border-radius: 1rem;
-      span {
-        color: #ea3162;
-        font-size: 1.7rem;
-        font-weight: bold;
-        padding: 0.5rem 1rem;
-      }
-
-      p {
-        font-size: 1.5rem;
-        color: #9a9a9a;
-        padding: 0.5rem 1rem;
-      }
-    }
-  }
-}
-</style>
