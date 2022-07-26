@@ -38,7 +38,7 @@
                     src="@/assets/images/reservations/edit.png"
                     alt="edit"
                     role="button"
-                    @click="editEmployee(scope.row)"
+                    @click="toggleEmpPopup()"
                   />
                 </div>
               </figure>
@@ -135,6 +135,40 @@
         Add
       </button>
     </uiPopupForm>
+
+    <!-- Select Employees -->
+    <uiPopupForm
+      v-if="showEmpPopup"
+      :modalTrigger="showEmpPopup"
+      @update:modalTrigger="toggleEmpPopup"
+      class="text-center"
+    >
+      <el-select
+        v-model="empolyee"
+        filterable
+        placeholder="select an employee"
+        class="w-75 my-5"
+        required
+      >
+        <el-option
+          v-for="item in validEmployees"
+          :key="item.id"
+          :label="item.empName"
+          :value="item.id"
+        >
+          <img
+            :src="item.profile"
+            width="25"
+            height="25"
+            class="rounded-circle mx-2"
+          />
+          <span>{{ item.empName }}</span>
+        </el-option>
+      </el-select>
+      <button type="submit" class="popupBtn my-5" @click.prevent="editEmployee">
+        Assign
+      </button>
+    </uiPopupForm>
   </section>
 </template>
 
@@ -154,6 +188,20 @@ export default {
     const response = await this.$axios.get(`/reservations?parent=${id}`);
     const { totalDocs } = response.data;
     this.children = totalDocs > 0 ? totalDocs : 1;
+
+    // Fetch valid & free employees
+    const employees = await this.$axios.get(
+      "/users?state=FREE&status=VALID&roles=EMPLOYEE"
+    );
+
+    // extract id , profile, and empName from employees
+    this.validEmployees = employees.data.map((employee) => {
+      return {
+        id: employee.id,
+        profile: employee.profile,
+        empName: employee.empName,
+      };
+    });
   },
   data() {
     return {
@@ -192,6 +240,9 @@ export default {
         adminNotes: [{ required: true, message: "Please enter notes" }],
       },
       showPopup: false,
+      showEmpPopup: false,
+      validEmployees: [],
+      empolyee: null,
     };
   },
   computed: {
@@ -200,9 +251,6 @@ export default {
     },
   },
   methods: {
-    editEmployee(row) {
-      console.log(row);
-    },
     async changeStatus(row) {
       const newStatus = row.status;
       const { id } = this.$route.params;
@@ -215,6 +263,9 @@ export default {
         this.$message.error("Error updating status");
       }
     },
+    toggleEmpPopup() {
+      this.showEmpPopup = !this.showEmpPopup;
+    },
     togglePopup() {
       this.showPopup = !this.showPopup;
     },
@@ -226,7 +277,6 @@ export default {
             const { id } = this.$route.params;
             this.form.day = this.form.day.toISOString();
             this.form.slot = this.data.slot;
-            console.log(this.form);
             await this.$axios.post(`/reservations/${id}/chiled`, this.form);
             this.showPopup = false;
             this.$message.success("Session added successfully");
@@ -240,6 +290,28 @@ export default {
           }
         }
       });
+    },
+    async editEmployee() {
+      if (!this.empolyee) {
+        this.$message.error("Please select an employee");
+        return;
+      }
+      const loading = this.$loading();
+      try {
+        const { id } = this.$route.params;
+        await this.$axios.patch(`/reservations/${id}/update`, {
+          empolyee: this.empolyee,
+        });
+        this.$message.success("Employee assigned successfully");
+        this.showEmpPopup = false;
+        window.location.reload();
+      } catch (e) {
+        this.$message.error(
+          e.response.data.message || "Error assigning employee"
+        );
+      } finally {
+        loading.close();
+      }
     },
   },
 };
