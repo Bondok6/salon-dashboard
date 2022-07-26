@@ -1,0 +1,153 @@
+<template>
+  <div class="card-3">
+    <h2>Revenue Report</h2>
+    <div class="wrapper">
+      <div class="chart">
+        <div class="chart-bar" v-for="item in data" :key="item.name">
+          <div class="chart-bar__inner">
+            <div
+              class="chart-bar__fill"
+              :style="`height: ${item.value}%;`"
+            ></div>
+          </div>
+          <div class="chart-bar__label">{{ item.name }}</div>
+        </div>
+      </div>
+      <div class="earning">
+        <div>
+          <h4>Earning</h4>
+          <h6>Today</h6>
+        </div>
+        <h3>$4055</h3>
+        <p>68.2% more earnings than last day.</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      data: [
+        {
+          name: "Mon",
+          value: 10,
+        },
+        {
+          name: "Tue",
+          value: 20,
+        },
+        {
+          name: "Wed",
+          value: 30,
+        },
+        {
+          name: "Thu",
+          value: 40,
+        },
+        {
+          name: "Fri",
+          value: 50,
+        },
+        {
+          name: "Sat",
+          value: 60,
+        },
+        {
+          name: "Sun",
+          value: 70,
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.card-3 {
+  padding: 2rem;
+
+  .wrapper {
+    display: flex;
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 2rem;
+    color: #5e5873;
+  }
+
+  .chart {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    height: 15rem;
+    width: 70%;
+
+    &-bar {
+      height: 100%;
+      width: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &__inner {
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+        background-color: #f3f3f3;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      &__fill {
+        background-color: #ea3162;
+        width: 100%;
+        transition: all 0.3s ease-out;
+      }
+
+      &__label {
+        font-size: 1rem;
+        text-align: center;
+        color: #b9b9c3;
+        padding-top: 0.5rem;
+      }
+    }
+  }
+
+  .earning {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    h4 {
+      font-size: 2rem;
+      color: #5e5873;
+    }
+
+    h6 {
+      font-size: 1.5rem;
+      color: #6e6b7b;
+    }
+
+    h3 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #5e5873;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #b9b9c3;
+    }
+  }
+}
+</style>
