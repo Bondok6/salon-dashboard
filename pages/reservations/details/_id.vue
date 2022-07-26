@@ -2,8 +2,11 @@
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <div class="header">
       <h2><span>Reservations > </span>Reservation #{{ id }}</h2>
-      <button class="btn btn--pink btn--details">+ Add Session</button>
+      <button class="btn btn--pink btn--details" @click="togglePopup">
+        + Add Session
+      </button>
     </div>
+
     <div class="content">
       <div class="content__left">
         <el-table :data="tableData" border>
@@ -95,6 +98,43 @@
         <div class="info">$ {{ data.total }}</div>
       </div>
     </div>
+
+    <!-- Add session Popup-->
+    <uiPopupForm
+      v-if="showPopup"
+      :modalTrigger="showPopup"
+      @update:modalTrigger="togglePopup"
+    >
+      <el-form
+        :rules="formRules"
+        :model="form"
+        ref="form"
+        class="p-3"
+        style="width: 500px"
+      >
+        <el-form-item label="Date" prop="day">
+          <el-date-picker
+            v-model="form.day"
+            type="datetime"
+            placeholder="Select date and time"
+            class="w-100"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="Notes" prop="adminNotes">
+          <el-input
+            v-model="form.adminNotes"
+            type="textarea"
+            placeholder="Enter note"
+            :rows="3"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+
+      <button type="submit" class="popupBtn" @click.prevent="addSession">
+        Add
+      </button>
+    </uiPopupForm>
   </section>
 </template>
 
@@ -143,6 +183,15 @@ export default {
           label: "Rejected",
         },
       ],
+      form: {
+        day: null,
+        adminNotes: "",
+      },
+      formRules: {
+        day: [{ required: true, message: "Please select date and time" }],
+        adminNotes: [{ required: true, message: "Please enter notes" }],
+      },
+      showPopup: false,
     };
   },
   computed: {
@@ -154,8 +203,43 @@ export default {
     editEmployee(row) {
       console.log(row);
     },
-    changeStatus(row) {
-      console.log(row);
+    async changeStatus(row) {
+      const newStatus = row.status;
+      const { id } = this.$route.params;
+      try {
+        await this.$axios.patch(
+          `/reservations/${id}/update?status=${newStatus}`
+        );
+        this.$message.success("Status updated successfully");
+      } catch (e) {
+        this.$message.error("Error updating status");
+      }
+    },
+    togglePopup() {
+      this.showPopup = !this.showPopup;
+    },
+    addSession() {
+      this.$refs.form.validate(async (valid) => {
+        if (valid) {
+          const loading = this.$loading();
+          try {
+            const { id } = this.$route.params;
+            this.form.day = this.form.day.toISOString();
+            this.form.slot = this.data.slot;
+            console.log(this.form);
+            await this.$axios.post(`/reservations/${id}/chiled`, this.form);
+            this.showPopup = false;
+            this.$message.success("Session added successfully");
+            window.location.reload();
+          } catch (e) {
+            this.$message.error(
+              e.response.data.message || "Error adding session"
+            );
+          } finally {
+            loading.close();
+          }
+        }
+      });
     },
   },
 };
