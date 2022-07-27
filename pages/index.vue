@@ -24,7 +24,9 @@
       <div class="col-md-8 statistics-card">
         <statisticsLinearProgress />
       </div>
-      <div class="col-md-3 statistics-card"></div>
+      <div class="col-md-3 statistics-card">
+        <statisticsCircleProgress />
+      </div>
     </div>
   </section>
 </template>
@@ -32,6 +34,10 @@
 <script>
 import LinearProgress from "../components/statistics/LinearProgress.vue";
 export default {
+  // async fetch({ store }) {
+  //   await store.dispatch("statistics/getCounts");
+  //   console.log(this.counts);
+  // },
   computed: {
     user() {
       return this.$auth.$storage.getUniversal("user");
@@ -39,6 +45,9 @@ export default {
     today() {
       return this.$moment().format("MMMM Do YYYY");
     },
+    // counts() {
+    //   return this.$store.state.statistics.counts;
+    // },
   },
   components: { LinearProgress },
 };

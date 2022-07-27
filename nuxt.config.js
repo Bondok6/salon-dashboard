@@ -33,6 +33,10 @@ export default {
       src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
       mode: "client",
     },
+    {
+      src: "~/plugins/vue-apexchart.js",
+      ssr: false,
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -84,6 +88,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+    vendor: ["vue-apexchart"],
   },
 
   router: {
