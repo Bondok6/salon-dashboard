@@ -11,7 +11,7 @@
         >
           {{ work.state }}
         </div>
-        <div class="times">
+        <div class="times" v-if="work.state === 'OPEN'">
           <div class="form">{{ timeFormat(work.startAt) }}</div>
           <div>TO</div>
           <div class="to">{{ timeFormat(work.endAt) }}</div>
@@ -36,50 +36,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.worktimes {
-  padding-top: 8rem;
-  font-size: 1.6rem;
-  font-weight: 500;
-  letter-spacing: 0.1rem;
-
-  .wrapper {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #fafafa;
-    border-radius: 0.5rem;
-
-    .state {
-      &:before {
-        content: "";
-        display: inline-block;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        font-size: 1.6rem;
-        position: relative;
-        top: 0.2rem;
-      }
-
-      &--open {
-        &:before {
-          background-color: #00a65a;
-        }
-      }
-
-      &--closed {
-        &:before {
-          background-color: #ff0000;
-        }
-      }
-    }
-
-    .times {
-      display: flex;
-      gap: 2rem;
-    }
-  }
-}
-</style>
