@@ -1,11 +1,11 @@
 export const state = () => ({
-  workingHours: [],
+  workTimes: [],
 });
 
 // Mutations
 export const mutations = {
-  setWorkingHours(state, workingHours) {
-    state.workingHours = workingHours;
+  setWorkTimes(state, workTimes) {
+    state.workTimes = workTimes;
   },
 };
 
@@ -46,5 +46,10 @@ export const actions = {
     const startTime = workingHours[0].startAt;
     const endTime = workingHours[0].endAt;
     return [startTime, endTime];
+  },
+  async fetchWorkTimes({ commit }) {
+    const workTimes = await this.$axios.$get("/working-hour");
+    console.log(workTimes);
+    commit("setWorkTimes", workTimes);
   },
 };

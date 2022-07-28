@@ -209,7 +209,7 @@ export default {
     },
     async onDateChange(date) {
       const [startTime, endTime] = await this.$store.dispatch(
-        `working-hours/fetchWorkingHoursSpecificDay`,
+        `workTimes/fetchWorkingHoursSpecificDay`,
         date
       );
       this.availableTimes = this.generateSlots(
