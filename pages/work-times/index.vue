@@ -1,6 +1,11 @@
 <template>
   <section>
-    <uiAddButton text="Edit Times" @click="goTo()" />
+    <uiAddButton
+      text="Edit Times"
+      @click="goToEdit()"
+      v-if="workTimes.length"
+    />
+    <uiAddButton text="Add Times" @click="goToAdd()" v-if="!workTimes.length" />
 
     <uiEmpty
       v-if="!workTimes.length"
@@ -18,8 +23,11 @@ export default {
     await store.dispatch("workTimes/fetchWorkTimes");
   },
   methods: {
-    goTo() {
+    goToEdit() {
       this.$router.push("/work-times/edit");
+    },
+    goToAdd() {
+      this.$router.push("/work-times/add");
     },
   },
   computed: {

@@ -184,7 +184,7 @@ export default {
     this.tableData.push(data);
     this.data = data;
 
-    // Get num of childs
+    // Get num of childs (sessions)
     const response = await this.$axios.get(`/reservations?parent=${id}`);
     const { totalDocs } = response.data;
     this.children = totalDocs > 0 ? totalDocs : 1;

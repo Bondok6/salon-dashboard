@@ -1,6 +1,6 @@
 <template>
   <section class="main-form mb-5">
-    <h2 class="main-form__title">Edit Working Days And Hours</h2>
+    <h2 class="main-form__title">Add Working Days And Hours</h2>
 
     <section class="worktimes container">
       <div class="row gap-4 my-5 mx-2" v-for="work in workTimes" :key="work.id">
@@ -46,10 +46,7 @@
       </div>
     </section>
 
-    <button
-      class="btn btn--pink btn--add mt-5"
-      @click.prevent="updateWorkTimes"
-    >
+    <button class="btn btn--pink btn--add mt-5" @click.prevent="addWorkTimes">
       Save
     </button>
     <button class="btn btn--white btn--add mt-5" @click.prevent="goTo()">
@@ -60,43 +57,57 @@
 
 <script>
 export default {
-  async mounted() {
-    const data = await this.$store.dispatch("workTimes/getWorkTimes");
-    data.forEach((work) => {
-      work.startAt = this.$moment(work.startAt).format("HH:mm");
-      work.endAt = this.$moment(work.endAt).format("HH:mm");
-    });
-    this.workTimes = data;
-  },
   data() {
     return {
-      workTimes: [],
+      workTimes: [
+        {
+          day: "SUNDAY",
+        },
+        {
+          day: "MONDAY",
+        },
+        {
+          day: "TUESDAY",
+        },
+        {
+          day: "WEDNESDAY",
+        },
+        {
+          day: "THURSDAY",
+        },
+        {
+          day: "FRIDAY",
+        },
+        {
+          day: "SATURDAY",
+        },
+      ],
     };
   },
   methods: {
     goTo() {
       this.$router.push("/work-times");
     },
-    async updateWorkTimes() {
-      // convert time to datetime format
+    async addWorkTimes() {
       this.workTimes.forEach((work) => {
-        work.startAt = this.$moment(work.startAt, "HH:mm").format();
-        work.endAt = this.$moment(work.endAt, "HH:mm").format();
+        if (work.startAt == "Invalid date") delete work.startAt;
+        if (work.endAt == "Invalid date") delete work.endAt;
+        if (work.startAt)
+          work.startAt = this.$moment(work.startAt, "HH:mm").format();
+        if (work.endAt) work.endAt = this.$moment(work.endAt, "HH:mm").format();
+
+        return;
       });
-      if (this.workTimes.length > 0) {
-        const loading = this.$loading();
-        try {
-          await this.$store.dispatch(
-            "workTimes/updateWorkTimes",
-            this.workTimes
-          );
-          this.$message.success("Work Times updated successfully");
-          this.$router.push("/work-times");
-        } catch {
-          this.$message.error("Work Times Update Failed");
-        } finally {
-          loading.close();
-        }
+
+      const loading = this.$loading();
+      try {
+        await this.$store.dispatch("workTimes/addWorkTimes", this.workTimes);
+        this.$message.success("Work Times added successfully");
+        this.$router.push("/work-times");
+      } catch {
+        this.$message.error("Work Times Add Failed");
+      } finally {
+        loading.close();
       }
     },
   },

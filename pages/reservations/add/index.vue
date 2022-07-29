@@ -192,11 +192,12 @@ export default {
   },
   methods: {
     generateSlots(start, end, duration) {
-      let startTime = this.$moment(start, "HH:mm");
-      let endTime = this.$moment(end, "HH:mm").add(1, "days");
+      // 02:30 Am - 03:30 Am
+      let startTime = this.$moment(start, "hh:mm A");
+      let endTime = this.$moment(end, "hh:mm A").add(1, "days");
       let slots = [];
       while (startTime < endTime) {
-        slots.push(startTime.format("HH:mm"));
+        slots.push(startTime.format("hh:mm A"));
         startTime.add(duration, "minutes");
       }
       return slots;
@@ -218,6 +219,12 @@ export default {
         this.duration
       );
     },
+    async checkSlotAvailability(slot, serviceId, day) {
+      const { data } = await this.$axios.get(
+        `/reservations/${slot}/${serviceId}/${day}/check`
+      );
+      return data.statusCode === 202 ? true : false;
+    },
     createReservation() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
@@ -238,8 +245,23 @@ export default {
               day: this.form.day.toISOString(),
               slot: dateTimeIso,
             };
+
+            const available = await this.checkSlotAvailability(
+              newReservation.slot,
+              newReservation.service.id,
+              newReservation.day
+            );
+
+            if (!available) {
+              this.$message.error(
+                "this slot (Time) is not available, please select another one"
+              );
+              return;
+            }
+
+            await this.$axios.post("/reservations", newReservation);
             this.$message.success("Reservation Created Successfully");
-            // this.$router.push("/reservations");
+            this.$router.push("/reservations");
           } catch (error) {
             this.$message.error("Reservation Creation Failed");
           } finally {

@@ -11,6 +11,9 @@ export const mutations = {
     const index = state.workTimes.findIndex((item) => item.id === workTime.id);
     state.workTimes[index] = workTime;
   },
+  addWorkTime(state, workTime) {
+    state.workTimes.push(workTime);
+  },
 };
 
 // Actions
@@ -32,8 +35,7 @@ export const actions = {
     const endTime = workingHours[0].endAt;
     return [startTime, endTime];
   },
-  async fetchWorkingHoursSpecificDay({ commit }, date) {
-    // convert date to day of week
+  async fetchWorkingHoursSpecificDay(_, date) {
     const days = [
       "SUNDAY",
       "MONDAY",
@@ -62,6 +64,12 @@ export const actions = {
     workTimes.forEach(async (workTime) => {
       await this.$axios.$patch(`/working-hour/${workTime.id}`, workTime);
       commit("updateWorkTimes", workTime);
+    });
+  },
+  async addWorkTimes({ commit }, workTimes) {
+    workTimes.forEach(async (workTime) => {
+      await this.$axios.$post("/working-hour", workTime);
+      commit("addWorkTime", workTime);
     });
   },
 };
