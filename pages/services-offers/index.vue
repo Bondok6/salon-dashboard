@@ -8,7 +8,7 @@
       caption="No Services have been added yet."
     />
 
-    <servicesServiceCards :services="services" />
+    <servicesCards :services="services" />
   </section>
 </template>
 

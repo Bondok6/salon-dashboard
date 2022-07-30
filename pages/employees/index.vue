@@ -8,7 +8,7 @@
       caption="No employees have been added yet"
     />
 
-    <empEmployeeList :tableData="employees" />
+    <empList :tableData="employees" />
   </section>
 </template>
 

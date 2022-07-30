@@ -8,7 +8,7 @@
       caption="No videos have been added yet."
     />
 
-    <videosVideoList :videos="videos" />
+    <videosList :videos="videos" />
   </section>
 </template>
 

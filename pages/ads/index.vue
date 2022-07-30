@@ -8,7 +8,7 @@
       caption="No advertisements have been added yet"
     />
 
-    <adsAdvertismentList :ads="ads" />
+    <adsList :ads="ads" />
   </section>
 </template>
 

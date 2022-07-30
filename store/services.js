@@ -33,7 +33,7 @@ export const actions = {
     const services = await this.$axios.$get("/services?enabled=false");
     commit("setServices", services);
   },
-  async fetchService({ commit }, id) {
+  async fetchService(_, id) {
     const service = await this.$axios.$get(`/services/${id}`);
     return service;
   },

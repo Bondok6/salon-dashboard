@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "spa-dashboard",
+    title: "Amany Dashboard",
     htmlAttrs: {
       lang: "en",
     },
@@ -32,6 +32,10 @@ export default {
     {
       src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
       mode: "client",
+    },
+    {
+      src: "~/plugins/vue-apexchart.js",
+      ssr: false,
     },
   ],
 
@@ -84,6 +88,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+    vendor: ["vue-apexchart"],
   },
 
   router: {

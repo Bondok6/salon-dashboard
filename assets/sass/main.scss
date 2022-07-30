@@ -13,12 +13,14 @@
 @import "components/default/navbar";
 @import "components/ui/buttons";
 @import "components/ui/empty";
+@import "components/ui/popup";
 @import "components/ads/card";
 @import "components/emp/table";
 @import "components/mainForm";
 @import "components/details&cards/cards";
+@import "components/reservations/details";
+@import "components/worktimes/list";
 
-// layout
 
 // pages
 @import "pages/auth";

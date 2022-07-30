@@ -8,7 +8,7 @@
       caption="No blogs have been added yet."
     />
 
-    <blogsBlogList :blogs="blogs" />
+    <blogsList :blogs="blogs" />
   </section>
 </template>
 
