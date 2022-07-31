@@ -6,22 +6,32 @@
         >{{ customer.firstName + " " + customer.lastName }}
       </h2>
     </div>
-    <nav>
-      <ul>
-        <li>
-          <router-link to=""> info </router-link>
-        </li>
-        <li>
-          <router-link to=""> reservations </router-link>
-        </li>
-        <li>
-          <router-link to=""> notifications </router-link>
-        </li>
-        <li>
-          <router-link to=""> messages </router-link>
-        </li>
-      </ul>
+    <nav class="customers_nav">
+      <nuxt-link
+        :to="`/customers/details/${customer.id}`"
+        class="customers_nav--item active-link"
+        >info</nuxt-link
+      >
+
+      <nuxt-link
+        :to="`/customers/details/reservations/${customer.id}`"
+        class="customers_nav--item"
+        >reservations</nuxt-link
+      >
+
+      <nuxt-link
+        :to="`/customers/details/notifications/${customer.id}`"
+        class="customers_nav--item"
+        >notifications</nuxt-link
+      >
+
+      <nuxt-link
+        :to="`/customers/details/messages/${customer.id}`"
+        class="customers_nav--item"
+        >messages</nuxt-link
+      >
     </nav>
+
     <section class="px-5">
       <div class="d-flex align-items-center gap-5 my-4">
         <div class="info">
@@ -75,23 +85,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.info {
-  background-color: #fafafa;
-  width: 20rem;
-  height: 5.5rem;
-  padding: 0 2rem;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  span {
-    font-size: 1.6rem;
-  }
-
-  &--large {
-    width: 40rem;
-  }
-}
-</style>
