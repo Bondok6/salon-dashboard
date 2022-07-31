@@ -55,13 +55,15 @@
       <template slot-scope="scope">
         <img
           src="@/assets/images/emp/edit.png"
-          style="width: 30px; cursor: pointer"
+          class="mx-2"
+          role="button"
           @click="handleEdit(scope.$index, scope.row)"
         />
 
         <img
           src="@/assets/images/emp/delete.png"
-          style="width: 30px; cursor: pointer"
+          class="mx-2"
+          role="button"
           @click="handleDelete(scope.$index, scope.row)"
         />
       </template>
