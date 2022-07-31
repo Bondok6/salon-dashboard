@@ -1,19 +1,67 @@
 <template>
-  <div class="text-center">
-    <h2>Calendar</h2>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur quia
-      nemo iste necessitatibus aut porro nostrum quaerat numquam neque,
-      quibusdam, quasi veniam laudantium debitis voluptatum itaque? At
-      temporibus laudantium explicabo vero cumque magnam harum ullam omnis
-      doloremque consequatur fuga, perspiciatis libero sequi excepturi provident
-      vitae odit esse. Aspernatur, aliquam provident.
-    </p>
-  </div>
+  <section>
+    <div class="text-center">
+      <el-date-picker
+        v-model="date"
+        type="date"
+        placeholder="Pick a day"
+        :picker-options="pickerOptions"
+      >
+      </el-date-picker>
+    </div>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr align="center">
+          <th scope="col">
+            <img
+              src="https://picsum.photos/200/300/"
+              alt=""
+              width="25"
+              height="25"
+            />
+            <h6>Employee 1</h6>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "Today",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: "Yesterday",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
+      },
+      date: "",
+    };
+  },
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>
