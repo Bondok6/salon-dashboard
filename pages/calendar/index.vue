@@ -10,31 +10,41 @@
       </el-date-picker>
     </div>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered mt-2">
       <thead>
-        <tr align="center">
-          <th scope="col">
-            <img
-              src="https://picsum.photos/200/300/"
-              alt=""
-              width="25"
-              height="25"
-            />
-            <h6>Employee 1</h6>
+        <tr>
+          <th scope="col" v-for="emp in employees" :key="emp.id">
+            <div class="employee">
+              <img
+                :src="emp.profile"
+                alt="profile"
+                class="rounded-circle"
+                width="30"
+                height="30"
+              />
+              <h6>{{ emp.empName }}</h6>
+            </div>
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
   </section>
 </template>
 
 <script>
 export default {
+  async fetch({ store }) {
+    await store.dispatch("calendar/fetchCalendar");
+  },
+  computed: {
+    employees() {
+      return this.$store.state.calendar.employees;
+    },
+    services() {
+      return this.$store.state.calendar.services;
+    },
+  },
   data() {
     return {
       pickerOptions: {
@@ -59,9 +69,39 @@ export default {
         ],
       },
       date: "",
+      color: "#e6dbff",
     };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.employee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  h6 {
+    font-size: 1.4rem;
+  }
+}
+
+.session {
+  width: 180px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h6 {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  p {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+}
+</style>
