@@ -27,7 +27,16 @@
           </th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr v-for="(cal, ind) in calendar" :key="ind">
+          <td v-for="c in cal" :key="c._id" align="center">
+            <div class="session" :style="`background:${c.service.color}`">
+              <h6>{{ c.service.nameEn }}</h6>
+              <p>{{ duration(c.slot, c.service.deuration) }}</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </section>
 </template>
@@ -41,8 +50,8 @@ export default {
     employees() {
       return this.$store.state.calendar.employees;
     },
-    services() {
-      return this.$store.state.calendar.services;
+    calendar() {
+      return this.$store.state.calendar.calendar;
     },
   },
   data() {
@@ -69,8 +78,17 @@ export default {
         ],
       },
       date: "",
-      color: "#e6dbff",
     };
+  },
+  methods: {
+    duration(slot, serviceDuration) {
+      const start = this.$moment(slot.start);
+      const end = this.$moment(slot.start).add(serviceDuration, "minutes");
+      // formate Am/Pm
+      const startTime = start.format("h:mm A");
+      const endTime = end.format("h:mm A");
+      return `${startTime} - ${endTime}`;
+    },
   },
 };
 </script>
