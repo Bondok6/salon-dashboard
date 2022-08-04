@@ -1,0 +1,8 @@
+<svg id="Notification" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <rect id="Rectangle_301" data-name="Rectangle 301" width="22" height="22" fill="#fff" opacity="0"/>
+  <g id="Notification-2" data-name="Notification" transform="translate(2 1.995)">
+    <line id="Line_58" data-name="Line 58" x1="3.297" transform="translate(7.352 18.01)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <line id="Line_59" data-name="Line 59" y2="3.297" transform="translate(9 4.72)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_329" data-name="Path 329" d="M103.286,268.034h0a2.135,2.135,0,0,1-2.153,2.117H87.438a2.135,2.135,0,0,1-2.153-2.117h0a2.106,2.106,0,0,1,.887-1.712h0a3.773,3.773,0,0,0,1.588-3.067v-1.842a6.545,6.545,0,0,1,10.968-4.932,6.372,6.372,0,0,1,2.082,4.7v2.078a3.773,3.773,0,0,0,1.588,3.067h0A2.106,2.106,0,0,1,103.286,268.034Z" transform="translate(-85.286 -254.761)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
