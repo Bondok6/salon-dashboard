@@ -3,8 +3,8 @@
     <h2>Today</h2>
     <div class="content">
       <h6>most used service</h6>
-      <h4>service name</h4>
-      <h4 class="number">500</h4>
+      <h4>{{ mostUsedService.NameEn }}</h4>
+      <h4 class="number">{{ mostUsedService.most }}</h4>
     </div>
 
     <img
@@ -16,7 +16,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    mostUsedService: {
+      type: Object,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

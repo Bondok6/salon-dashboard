@@ -17,7 +17,7 @@
         <statisticsCard :counts="counts" />
       </div>
       <div class="col-md-3 statistics-card">
-        <statisticsTarget />
+        <statisticsTarget :mostUsedService="mostUsedService" />
       </div>
     </div>
     <div class="row gap-5 m-5">
@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import LinearProgress from "../components/statistics/LinearProgress.vue";
 export default {
   async fetch({ store }) {
     await store.dispatch("statistics/getCounts");
     await store.dispatch("statistics/getTodayRevenue");
+    await store.dispatch("statistics/getMostUsedService");
   },
   computed: {
     user() {
@@ -51,8 +51,10 @@ export default {
     todayRevenue() {
       return this.$store.state.statistics.todayRevenue;
     },
+    mostUsedService() {
+      return this.$store.state.statistics.mostUsedService;
+    },
   },
-  components: { LinearProgress },
 };
 </script>
 
