@@ -5,28 +5,28 @@
       <li class="item">
         <img src="@/assets/images/statistics/icon-1.png" alt="icon-1" />
         <div>
-          <h6 class="number">230</h6>
+          <h6 class="number">{{ counts.reservations }}</h6>
           <h6 class="title">Reservations</h6>
         </div>
       </li>
       <li class="item">
         <img src="@/assets/images/statistics/icon-2.png" alt="icon-2" />
         <div>
-          <h6 class="number">8.549k</h6>
+          <h6 class="number">{{ counts.customers }}</h6>
           <h6 class="title">Customers</h6>
         </div>
       </li>
       <li class="item">
         <img src="@/assets/images/statistics/icon-3.png" alt="icon-3" />
         <div>
-          <h6 class="number">2</h6>
+          <h6 class="number">{{ counts.absentEmployees }}</h6>
           <h6 class="title">Absent Employees</h6>
         </div>
       </li>
       <li class="item">
         <img src="@/assets/images/statistics/icon-4.png" alt="icon-4" />
         <div>
-          <h6 class="number">$4055</h6>
+          <h6 class="number">${{ counts.revenue }}</h6>
           <h6 class="title">Revenue</h6>
         </div>
       </li>
@@ -35,7 +35,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    counts: {
+      type: Object,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

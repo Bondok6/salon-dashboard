@@ -12,8 +12,8 @@ export const state = () => ({
 
 // mutations
 export const mutations = {
-  setCount(state, count) {
-    state.count = count;
+  setCounts(state, count) {
+    state.counts = count;
   },
   setTodayRevenue(state, revenue) {
     state.todayRevenue = revenue;
@@ -29,18 +29,20 @@ export const mutations = {
 // Actions
 export const actions = {
   async getCounts({ commit }) {
-    const res = await this.$axios.get("/statistics/count/users?role=Client");
+    const res = await this.$axios.get("/statistics/count/users?role=CLIENT");
     const customers = res.data.count;
 
     const res1 = await this.$axios.get(
-      "/statistics/count/users?role=Employee?attendent=ABSENT"
+      "/statistics/count/users?role=EMPLOYEE&attendent=ABSENT"
     );
     const absentEmployees = res1.data.count;
 
-    const res2 = await this.$axios.get("/statistics/reservations/count-docs");
+    const res2 = await this.$axios.get("/statistics/reservation/count-docs");
     const reservations = res2.data.count;
 
-    const res3 = await this.$axios.get("/statistics/revenue/calculate-revenue");
+    const res3 = await this.$axios.get(
+      "/statistics/reservation/calculate-revenue"
+    );
     const revenue = res3.data[0].totalReven;
 
     const count = {
@@ -50,17 +52,25 @@ export const actions = {
       revenue,
     };
 
-    commit("setCount", count);
+    commit("setCounts", count);
   },
   async getTodayRevenue({ commit }) {
-    const date = new Date();
-    const today = date.toISOString();
+    const day = new Date();
+    const today = day.toISOString();
     const res = await this.$axios.get(
-      `/statistics/revenue/calculate-revenue?day=${today}`
+      "/statistics/reservation/calculate-revenue",
+      {
+        params: {
+          day: today,
+        },
+      }
     );
-    const revenue = res.data[0].totalReven;
-
-    commit("setTodayRevenue", revenue);
+    if (res.data.length > 0) {
+      const revenue = res.data[0].totalReven;
+      commit("setTodayRevenue", revenue);
+    } else {
+      commit("setTodayRevenue", 0);
+    }
   },
   async getMostUsedService({ commit }) {
     const res = await this.$axios.get("/statistics/most/used-service");

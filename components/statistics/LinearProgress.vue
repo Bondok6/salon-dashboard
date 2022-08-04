@@ -18,7 +18,7 @@
           <h4>Earning</h4>
           <h6>Today</h6>
         </div>
-        <h3>$4055</h3>
+        <h3>${{ todayRevenue }}</h3>
         <p>68.2% more earnings than last day.</p>
       </div>
     </div>
@@ -27,13 +27,14 @@
 
 <script>
 export default {
+  props: ["todayRevenue"],
   data() {
     return {
       days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       data: [
         {
           name: "Mon",
-          value: 10,
+          value: 40,
         },
         {
           name: "Tue",
@@ -45,19 +46,19 @@ export default {
         },
         {
           name: "Thu",
-          value: 40,
+          value: 70,
         },
         {
           name: "Fri",
-          value: 50,
+          value: 0,
         },
         {
           name: "Sat",
-          value: 60,
+          value: 35,
         },
         {
           name: "Sun",
-          value: 70,
+          value: 50,
         },
       ],
     };

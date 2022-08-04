@@ -14,7 +14,7 @@
 
     <div class="row gap-5 m-5">
       <div class="col-md-8 statistics-card">
-        <statisticsCard />
+        <statisticsCard :counts="counts" />
       </div>
       <div class="col-md-3 statistics-card">
         <statisticsTarget />
@@ -22,11 +22,11 @@
     </div>
     <div class="row gap-5 m-5">
       <div class="col-md-8 statistics-card">
-        <statisticsLinearProgress />
+        <statisticsLinearProgress :todayRevenue="todayRevenue" />
       </div>
-      <div class="col-md-3 statistics-card">
+      <!-- <div class="col-md-3 statistics-card">
         <statisticsCircleProgress />
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
@@ -34,10 +34,10 @@
 <script>
 import LinearProgress from "../components/statistics/LinearProgress.vue";
 export default {
-  // async fetch({ store }) {
-  //   await store.dispatch("statistics/getCounts");
-  //   console.log(this.counts);
-  // },
+  async fetch({ store }) {
+    await store.dispatch("statistics/getCounts");
+    await store.dispatch("statistics/getTodayRevenue");
+  },
   computed: {
     user() {
       return this.$auth.$storage.getUniversal("user");
@@ -45,9 +45,12 @@ export default {
     today() {
       return this.$moment().format("MMMM Do YYYY");
     },
-    // counts() {
-    //   return this.$store.state.statistics.counts;
-    // },
+    counts() {
+      return this.$store.state.statistics.counts;
+    },
+    todayRevenue() {
+      return this.$store.state.statistics.todayRevenue;
+    },
   },
   components: { LinearProgress },
 };
