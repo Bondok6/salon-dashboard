@@ -91,8 +91,6 @@ export default {
     vendor: ["vue-apexchart"],
   },
 
-  target: "static",
-
   router: {
     base: "/spa-dashboard/",
     middleware: "auth",
