@@ -93,7 +93,7 @@
         <div class="heading">Name Of Service</div>
         <div class="info">{{ data.service.nameEn }}</div>
         <div class="heading">Number Of Sessions</div>
-        <div class="info">{{ children }} / {{ data.service.numofsets }}</div>
+        <div class="info">{{ childrenNum }} / {{ data.service.numofsets }}</div>
         <div class="heading">Session Price</div>
         <div class="info">$ {{ data.total }}</div>
       </div>
@@ -187,7 +187,11 @@ export default {
     // Get num of childs (sessions)
     const response = await this.$axios.get(`/reservations?parent=${id}`);
     const { totalDocs } = response.data;
-    this.children = totalDocs > 0 ? totalDocs : 0;
+    this.childrenNum = totalDocs + 1;
+    // if (totalDocs > 0) {
+    //   this.childrenTableData = response.data.docs;
+    // }
+    // console.log(this.childrenTableData);
 
     // Fetch valid & free employees
     const employees = await this.$axios.get(
@@ -206,9 +210,10 @@ export default {
   data() {
     return {
       tableData: [],
+      // childrenTableData: [],
       data: {},
       showNote: false,
-      children: null,
+      childrenNum: null,
       statusOptions: [
         {
           value: "ACCEPTED",

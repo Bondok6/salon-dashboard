@@ -34,33 +34,33 @@
 
     <section class="px-5">
       <div class="d-flex align-items-center gap-5 my-4">
-        <div class="info">
+        <div class="information">
           <img src="@/assets/images/customers/name.png" alt="name-icon" />
           <span>{{ customer.firstName }}</span>
         </div>
-        <div class="info">
+        <div class="information">
           <img src="@/assets/images/customers/name.png" alt="name-icon" />
           <span>{{ customer.lastName }}</span>
         </div>
       </div>
       <div class="d-flex align-items-center gap-5 my-4">
-        <div class="info">
+        <div class="information">
           <img src="@/assets/images/customers/gender.png" alt="gender-icon" />
           <span>{{ customer.gender.toLowerCase() }}</span>
         </div>
-        <div class="info">
+        <div class="information">
           <img src="@/assets/images/customers/age.png" alt="age-icon" />
           <span>{{ customer.age }}</span>
         </div>
       </div>
       <div class="d-flex align-items-center gap-5 my-4">
-        <div class="info info--large">
+        <div class="information information--large">
           <img src="@/assets/images/customers/phone.png" alt="phone-icon" />
           <span>{{ customer.phone }}</span>
         </div>
       </div>
       <div class="d-flex align-items-center gap-5 my-4">
-        <div class="info info--large">
+        <div class="information information--large">
           <img
             src="@/assets/images/customers/location.png"
             alt="location-icon"
