@@ -92,6 +92,7 @@ export default {
           );
           this.$message.success("Work Times updated successfully");
           this.$router.push("/work-times");
+          this.$store.dispatch("workTimes/getWorkTimes");
         } catch {
           this.$message.error("Work Times Update Failed");
         } finally {

@@ -16,6 +16,27 @@ export const mutations = {
   },
 };
 
+function orderByDay(workTimes) {
+  // Order by day sunday to saturday
+  const days = [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+  ];
+  const workTimesOrdered = [];
+  days.forEach((day) => {
+    const workTime = workTimes.find((item) => item.day === day);
+    if (workTime) {
+      workTimesOrdered.push(workTime);
+    }
+  });
+  return workTimesOrdered;
+}
+
 // Actions
 export const actions = {
   async fetchWorkingHoursCurrentDay() {
@@ -54,11 +75,13 @@ export const actions = {
   },
   async fetchWorkTimes({ commit }) {
     const workTimes = await this.$axios.$get("/working-hour");
-    commit("setWorkTimes", workTimes);
+    const workTimesOrdered = orderByDay(workTimes);
+    commit("setWorkTimes", workTimesOrdered);
   },
   async getWorkTimes() {
     const workTimes = await this.$axios.$get("/working-hour");
-    return workTimes;
+    const workTimesOrdered = orderByDay(workTimes);
+    return workTimesOrdered;
   },
   async updateWorkTimes({ commit }, workTimes) {
     workTimes.forEach(async (workTime) => {
