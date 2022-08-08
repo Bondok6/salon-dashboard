@@ -96,7 +96,7 @@ export default {
     },
     async handleChange(duration) {
       const [startTime, endTime] = await this.$store.dispatch(
-        `workTimes/fetchWorkingHoursPerDay`
+        `workTimes/fetchWorkingHoursCurrentDay`
       );
       this.slots = this.generateSlots(startTime, endTime, duration);
     },
@@ -105,7 +105,7 @@ export default {
       let endTime = this.$moment(end, "HH:mm").add(1, "days");
       let slots = [];
       while (startTime < endTime) {
-        slots.push(startTime.format("HH:mm"));
+        slots.push(startTime.format("hh:mm a"));
         startTime.add(duration, "minutes");
       }
       return slots;

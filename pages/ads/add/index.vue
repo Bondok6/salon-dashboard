@@ -32,6 +32,7 @@
           type="textarea"
           :rows="2"
           v-model="form.descriptionEn"
+          maxlength="60"
         ></el-input>
       </el-form-item>
 
@@ -39,7 +40,12 @@
         label="Description Of Advertisement Ar"
         prop="descriptionAr"
       >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionAr">
+        <el-input
+          type="textarea"
+          :rows="2"
+          v-model="form.descriptionAr"
+          maxlength="60"
+        >
         </el-input>
       </el-form-item>
 
@@ -47,7 +53,12 @@
         label="Description Of Advertisement Heb"
         prop="descriptionAr"
       >
-        <el-input type="textarea" :rows="2" v-model="form.descriptionHeb">
+        <el-input
+          type="textarea"
+          :rows="2"
+          v-model="form.descriptionHeb"
+          maxlength="60"
+        >
         </el-input>
       </el-form-item>
     </el-form>

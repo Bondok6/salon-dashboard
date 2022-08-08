@@ -3,14 +3,14 @@
     <h2>Revenue Report</h2>
     <div class="wrapper">
       <div class="chart">
-        <div class="chart-bar" v-for="item in data" :key="item.name">
+        <div class="chart-bar" v-for="item in linearProgress" :key="item.day">
           <div class="chart-bar__inner">
             <div
               class="chart-bar__fill"
-              :style="`height: ${item.value}%;`"
+              :style="`height: ${item.count}%;`"
             ></div>
           </div>
-          <div class="chart-bar__label">{{ item.name }}</div>
+          <div class="chart-bar__label">{{ item.day }}</div>
         </div>
       </div>
       <div class="earning">
@@ -27,41 +27,15 @@
 
 <script>
 export default {
-  props: ["todayRevenue"],
-  data() {
-    return {
-      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      data: [
-        {
-          name: "Mon",
-          value: 40,
-        },
-        {
-          name: "Tue",
-          value: 20,
-        },
-        {
-          name: "Wed",
-          value: 30,
-        },
-        {
-          name: "Thu",
-          value: 70,
-        },
-        {
-          name: "Fri",
-          value: 0,
-        },
-        {
-          name: "Sat",
-          value: 35,
-        },
-        {
-          name: "Sun",
-          value: 50,
-        },
-      ],
-    };
+  props: {
+    todayRevenue: {
+      type: Number,
+      required: true,
+    },
+    linearProgress: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>

@@ -111,13 +111,13 @@ export default {
             const form1 = JSON.parse(sessionStorage.getItem("form1"));
             const form2 = JSON.parse(sessionStorage.getItem("form2"));
             let form3 = {};
+            const enabled = this.enabled === "true" ? true : false;
 
             if (this.offer === "true") {
               const start = new Date(this.form.startOffer);
               const end = new Date(this.form.endOffer);
               const startOfferDate = start.toISOString();
               const endOfferDate = end.toISOString();
-              const enabled = this.enabled === "true" ? true : false;
               form3 = {
                 price: {
                   price: this.form.price,

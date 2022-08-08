@@ -187,7 +187,7 @@ export default {
     // Get num of childs (sessions)
     const response = await this.$axios.get(`/reservations?parent=${id}`);
     const { totalDocs } = response.data;
-    this.children = totalDocs > 0 ? totalDocs : 1;
+    this.children = totalDocs > 0 ? totalDocs : 0;
 
     // Fetch valid & free employees
     const employees = await this.$axios.get(

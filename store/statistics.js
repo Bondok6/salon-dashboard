@@ -8,6 +8,7 @@ export const state = () => ({
   todayRevenue: 0,
   mostUsedService: {},
   mostUsedServiceToday: {},
+  linearProgress: {},
 });
 
 // mutations
@@ -23,6 +24,9 @@ export const mutations = {
   },
   setMostUsedServiceToday(state, service) {
     state.mostUsedServiceToday = service;
+  },
+  setLinearProgress(state, progress) {
+    state.linearProgress = progress;
   },
 };
 
@@ -87,5 +91,59 @@ export const actions = {
     const service = res.data[0];
 
     commit("setMostUsedServiceToday", service);
+  },
+  async getLinearProgress({ commit }) {
+    const res = await this.$axios.get("/statistics/reservation-progress");
+    const data = res.data.counter;
+    const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const progress = [];
+
+    // If data == [], then there is no data for the last 7 days
+    if (data.length === 0) {
+      for (let i = 0; i < 7; i++) {
+        const day = new Date();
+        day.setDate(day.getDate() - i);
+        const dayName = weekDays[day.getDay()];
+        progress.push({
+          day: dayName,
+          count: 0,
+        });
+      }
+    }
+    // function to convert 2022-12-31 to "Tue"
+    const convertDay = (day) => {
+      const date = new Date(day);
+      const dayName = weekDays[date.getDay()];
+      return dayName;
+    };
+
+    // If data != [], then I should get the day from the date and the count from the data
+    // I should push the data to the progress array
+    if (data.length > 0) {
+      const progress = [];
+      data.forEach((el) => {
+        progress.push({
+          day: convertDay(el._id),
+          count: el.total,
+        });
+      });
+
+      // If there is a day in weekDays that is not in the progress array, then I should push it with 0 count
+      for (let i = 0; i < 7; i++) {
+        const day = new Date();
+        day.setDate(day.getDate() - i);
+        const dayName = weekDays[day.getDay()];
+        if (!progress.find((el) => el.day === dayName)) {
+          progress.push({
+            day: dayName,
+            count: 0,
+          });
+        }
+      }
+    }
+
+    console.log(progress);
+
+    commit("setLinearProgress", progress);
   },
 };

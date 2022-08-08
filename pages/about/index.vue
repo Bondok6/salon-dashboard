@@ -1,6 +1,6 @@
 <template>
   <section>
-    <uiAddButton text="Information" @click="goTo()" />
+    <uiAddButton text="Information" @click="goTo()" v-if="!info.length" />
 
     <uiEmpty
       v-if="!info.length"

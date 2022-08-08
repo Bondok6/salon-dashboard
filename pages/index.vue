@@ -22,7 +22,10 @@
     </div>
     <div class="row gap-5 m-5">
       <div class="col-md-8 statistics-card">
-        <statisticsLinearProgress :todayRevenue="todayRevenue" />
+        <statisticsLinearProgress
+          :todayRevenue="todayRevenue"
+          :linearProgress="linearProgress"
+        />
       </div>
       <!-- <div class="col-md-3 statistics-card">
         <statisticsCircleProgress />
@@ -37,6 +40,7 @@ export default {
     await store.dispatch("statistics/getCounts");
     await store.dispatch("statistics/getTodayRevenue");
     await store.dispatch("statistics/getMostUsedService");
+    await store.dispatch("statistics/getLinearProgress");
   },
   computed: {
     user() {
@@ -53,6 +57,9 @@ export default {
     },
     mostUsedService() {
       return this.$store.state.statistics.mostUsedService;
+    },
+    linearProgress() {
+      return this.$store.state.statistics.linearProgress;
     },
   },
 };

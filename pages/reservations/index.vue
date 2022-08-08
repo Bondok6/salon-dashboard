@@ -4,15 +4,15 @@
     <span class="fs-4 mx-5">{{ today }}</span>
 
     <!-- Filters -->
-    <button class="filterBtn" @click="toggleCalender">
+    <!-- <button class="filterBtn" @click="toggleCalender">
       <img src="@/assets/images/reservations/date-filter.png" alt="filter" />
-    </button>
+    </button> -->
     <button class="filterBtn" @click="toggleFilter">
       <img src="@/assets/images/reservations/oreder-filter.png" alt="filter" />
     </button>
 
     <!-- Calender Popup-->
-    <uiPopupForm
+    <!-- <uiPopupForm
       v-if="showCalender"
       :modalTrigger="showCalender"
       @update:modalTrigger="toggleCalender"
@@ -21,7 +21,7 @@
       <button type="submit" class="popupBtn" @click.prevent="dateFilter">
         Filter
       </button>
-    </uiPopupForm>
+    </uiPopupForm> -->
 
     <!-- Filter Popup -->
     <uiPopupForm
