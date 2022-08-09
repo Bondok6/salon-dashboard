@@ -1,6 +1,7 @@
 export const state = () => ({
   customers: [],
   customer: {},
+  customerReservations: [],
 });
 
 // Mutations
@@ -17,7 +18,6 @@ export const mutations = {
 export const actions = {
   async fetchCustomers({ commit }) {
     const customers = await this.$axios.$get("/users?roles=CLIENT");
-    // customerName = firstName + " " + lastName
     customers.forEach((customer) => {
       customer.customerName = customer.firstName + " " + customer.lastName;
     });

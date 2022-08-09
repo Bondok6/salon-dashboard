@@ -27,9 +27,9 @@
           :linearProgress="linearProgress"
         />
       </div>
-      <!-- <div class="col-md-3 statistics-card">
+      <div class="col-md-3 statistics-card">
         <statisticsCircleProgress />
-      </div> -->
+      </div>
     </div>
   </section>
 </template>
