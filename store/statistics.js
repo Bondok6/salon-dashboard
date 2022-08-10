@@ -9,6 +9,7 @@ export const state = () => ({
   mostUsedService: {},
   mostUsedServiceToday: {},
   linearProgress: {},
+  circleProgress: {},
 });
 
 // mutations
@@ -27,6 +28,9 @@ export const mutations = {
   },
   setLinearProgress(state, progress) {
     state.linearProgress = progress;
+  },
+  setCircleProgress(state, progress) {
+    state.circleProgress = progress;
   },
 };
 
@@ -109,7 +113,10 @@ export const actions = {
           count: 0,
         });
       }
+      commit("setLinearProgress", progress);
+      return;
     }
+
     // function to convert 2022-12-31 to "Tue"
     const convertDay = (day) => {
       const date = new Date(day);
@@ -140,10 +147,39 @@ export const actions = {
           });
         }
       }
+      // convert count to percentage
+      progress.forEach((el) => {
+        // get max total from progress array
+        const max = progress.reduce((acc, cur) => Math.max(acc, cur.count), 0);
+        el.count = Math.round((el.count / max) * 100);
+      });
+      commit("setLinearProgress", progress);
+      return;
     }
+  },
+  async getCircleProgress({ commit }) {
+    const res = await this.$axios.get("/statistics/reservation/grouped-status");
+    const data = res.data;
+    // Remove PROCESSING from the data
+    const filteredData = data.filter((el) => el._id !== "PROCESSING");
+    // order objects by count ASC
+    const orderedData = filteredData.sort((a, b) => a.count - b.count);
 
-    console.log(progress);
+    const progress = {
+      series: [],
+      labels: [],
+    };
+    progress.labels = orderedData.map((el) => el._id);
+    // progress.series = orderedData.map((el) => el.count);
 
-    commit("setLinearProgress", progress);
+    // convert count to percentage
+    orderedData.forEach((el) => {
+      // get max count from progress array
+      const max = orderedData.reduce((acc, cur) => Math.max(acc, cur.count), 0);
+      el.count = Math.round((el.count / max) * 100);
+      progress.series.push(el.count);
+    });
+
+    commit("setCircleProgress", progress);
   },
 };

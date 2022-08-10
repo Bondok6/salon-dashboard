@@ -28,7 +28,7 @@
         />
       </div>
       <div class="col-md-3 statistics-card">
-        <statisticsCircleProgress />
+        <statisticsCircleProgress :circleProgress="circleProgress" />
       </div>
     </div>
   </section>
@@ -41,6 +41,7 @@ export default {
     await store.dispatch("statistics/getTodayRevenue");
     await store.dispatch("statistics/getMostUsedService");
     await store.dispatch("statistics/getLinearProgress");
+    await store.dispatch("statistics/getCircleProgress");
   },
   computed: {
     user() {
@@ -60,6 +61,9 @@ export default {
     },
     linearProgress() {
       return this.$store.state.statistics.linearProgress;
+    },
+    circleProgress() {
+      return this.$store.state.statistics.circleProgress;
     },
   },
 };

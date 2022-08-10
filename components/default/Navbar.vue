@@ -8,9 +8,6 @@
     <div class="navbar__left">
       <ul class="nav-links">
         <li>
-          <img src="@/assets/images/navbar/search.svg" alt="search-icon" />
-        </li>
-        <li>
           <img src="@/assets/images/navbar/cart.svg" alt="cart-icon" />
         </li>
       </ul>
