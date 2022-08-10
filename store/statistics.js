@@ -147,12 +147,13 @@ export const actions = {
           });
         }
       }
+
       // convert count to percentage
+      const maxCount = Math.max(...progress.map((el) => el.count));
       progress.forEach((el) => {
-        // get max total from progress array
-        const max = progress.reduce((acc, cur) => Math.max(acc, cur.count), 0);
-        el.count = Math.round((el.count / max) * 100);
+        el.count = Math.round((el.count / maxCount) * 100);
       });
+
       commit("setLinearProgress", progress);
       return;
     }
