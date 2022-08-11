@@ -54,7 +54,6 @@ export default {
     const { id } = this.$route.params;
     await this.$store.dispatch("customers/fetchCustomer", id);
     await this.fetchCustomerReservations();
-    console.log(this.reservations);
   },
   data() {
     return {
