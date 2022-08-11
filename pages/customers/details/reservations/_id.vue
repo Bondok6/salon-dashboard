@@ -36,7 +36,7 @@
 
     <!-- Pagination -->
     <el-pagination
-      class="m-5 position-absolute right-0"
+      class="m-5"
       v-if="totalPages > 1"
       background
       layout="prev, pager, next"

@@ -229,7 +229,4 @@ export default {
 .filterBtn:hover {
   transform: scale(1.1);
 }
-.el-pagination {
-  float: right;
-}
 </style>
