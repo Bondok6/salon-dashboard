@@ -63,8 +63,9 @@ export default {
     this.validEmployees = await this.$store.dispatch("emp/fetchValidEmployees");
     const { id } = this.$route.params;
     const data = await this.$store.dispatch("services/fetchService", id);
+    const employees = data.employees.map((emp) => emp.id);
     this.form = {
-      employees: data.employees,
+      employees,
       deuration: data.deuration,
     };
     const [startTime, endTime] = await this.$store.dispatch(

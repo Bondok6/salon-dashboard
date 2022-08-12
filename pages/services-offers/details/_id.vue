@@ -11,11 +11,11 @@
       <div class="blog-cards__card-content">
         <h3 class="blog-cards__card-title">{{ service.nameEn }}</h3>
         <p class="blog-cards__card-text" v-if="service.enabled">
-          <span class="price">$ {{ service.price.price }}</span>
-          <span class="discount">$ {{ service.price.priceAftereOffer }}</span>
+          <span class="price">₪ {{ service.price.price }}</span>
+          <span class="discount">₪ {{ service.price.priceAftereOffer }}</span>
         </p>
         <p class="blog-cards__card-text" v-else>
-          <span class="prince-only">$ {{ service.price.price }}</span>
+          <span class="prince-only">₪ {{ service.price.price }}</span>
         </p>
       </div>
     </div>
@@ -28,6 +28,15 @@
       <div class="service-details">
         <div class="key">Employees:</div>
         <div class="value">{{ service.employees.length }}</div>
+      </div>
+      <!-- employees -->
+      <div class="service-details">
+        <div class="key">Employees' names:</div>
+        <div class="value value--emp">
+          <div v-for="emp in service.employees" :key="emp.id" class="emp">
+            &nbsp;{{ emp.empName }}
+          </div>
+        </div>
       </div>
       <div class="service-details">
         <div class="key">Number Of Sessions:</div>

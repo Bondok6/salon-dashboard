@@ -39,8 +39,14 @@
         class="sessions--border"
       >
         <div v-for="c in cal" :key="c._id" align="center">
-          <div class="session" :style="`background:${c.service.color}`">
-            <h6>{{ c.service.nameEn }}</h6>
+          <div
+            class="session"
+            :style="`background:${c.service.color}`"
+            @click="goTo(c.directParent)"
+            role="button"
+          >
+            <h4>{{ c.service.nameEn }}</h4>
+            <h6>{{ c.firstName + " " + c.lastName }}</h6>
             <p>{{ duration(c.slot, c.service.deuration) }}</p>
           </div>
         </div>
@@ -99,6 +105,9 @@ export default {
     handleChange(date) {
       this.$store.dispatch("calendar/fetchCalendar", date);
     },
+    goTo(id) {
+      this.$router.push(`/reservations/details/${id}`);
+    },
   },
 };
 </script>
@@ -129,18 +138,22 @@ export default {
   }
 
   .session {
-    width: 180px;
-    height: 90px;
+    width: 200px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem;
     margin: 1rem 0;
     border-radius: 0.5rem;
 
-    h6 {
+    h4 {
       font-size: 1.4rem;
       font-weight: bold;
+    }
+    h6 {
+      font-size: 1.2rem;
     }
     p {
       font-size: 1.2rem;

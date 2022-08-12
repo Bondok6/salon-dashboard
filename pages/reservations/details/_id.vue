@@ -7,6 +7,7 @@
       </button>
     </div>
 
+    <!-- Parent (Main) session -->
     <div class="content">
       <div class="content__left">
         <el-table :data="tableData" border>
@@ -73,7 +74,7 @@
         <div v-if="showNote" class="note">
           <p>
             <span>Note</span>
-            {{ tableData.clientNotes || "There are no notes" }}
+            {{ data.clientNotes || "There are no notes" }}
           </p>
         </div>
       </div>
@@ -95,7 +96,71 @@
         <div class="heading">Number Of Sessions</div>
         <div class="info">{{ childrenNum }} / {{ data.service.numofsets }}</div>
         <div class="heading">Session Price</div>
-        <div class="info">$ {{ data.total }}</div>
+        <div class="info">₪ {{ data.total }}</div>
+      </div>
+    </div>
+
+    <!-- Children sessions -->
+    <h2 class="children" v-if="childrenTableData.length">Sessions</h2>
+    <div class="content" v-if="childrenTableData.length">
+      <div class="content__left content__left--children">
+        <el-table :data="childrenTableData" border>
+          <el-table-column
+            label="ID"
+            type="index"
+            align="center"
+          ></el-table-column>
+
+          <el-table-column
+            prop="day"
+            label="DATE & TIME"
+            align="center"
+          ></el-table-column>
+
+          <el-table-column label="Employee" prop="empolyee" align="center">
+            <template slot-scope="scope">
+              <figure class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <img
+                    :src="scope.row.empolyee.profile"
+                    alt="employee"
+                    class="rounded-circle"
+                    width="30"
+                    height="30"
+                  />
+                  <figcaption>{{ scope.row.empolyee.empName }}</figcaption>
+                </div>
+                <div>
+                  <img
+                    src="@/assets/images/reservations/edit.png"
+                    alt="edit"
+                    role="button"
+                    @click="toggleEmpPopup(scope.row)"
+                  />
+                </div>
+              </figure>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="STATE" prop="status" align="center">
+            <template slot-scope="scope">
+              <el-select
+                v-model="scope.row.status"
+                @change="changeStatus(scope.row)"
+              >
+                <el-option
+                  v-for="item in statusOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Note" prop="clientNotes" align="center">
+          </el-table-column>
+        </el-table>
       </div>
     </div>
 
@@ -188,10 +253,17 @@ export default {
     const response = await this.$axios.get(`/reservations?parent=${id}`);
     const { totalDocs } = response.data;
     this.childrenNum = totalDocs + 1;
-    // if (totalDocs > 0) {
-    //   this.childrenTableData = response.data.docs;
-    // }
-    // console.log(this.childrenTableData);
+
+    // Get Children (sessions)
+    if (totalDocs > 0) {
+      this.childrenTableData = response.data.docs;
+      this.childrenTableData.forEach((item) => {
+        item.day = this.$moment(item.day).format("MMMM Do YYYY, h:mm a");
+        item.createdAt = this.$moment(item.createdAt).format(
+          "MMMM Do YYYY, h:mm a"
+        );
+      });
+    }
 
     // Fetch valid & free employees
     const employees = await this.$axios.get(
@@ -210,7 +282,7 @@ export default {
   data() {
     return {
       tableData: [],
-      // childrenTableData: [],
+      childrenTableData: [],
       data: {},
       showNote: false,
       childrenNum: null,
@@ -248,6 +320,7 @@ export default {
       showEmpPopup: false,
       validEmployees: [],
       employee: null,
+      reservationId: null,
     };
   },
   computed: {
@@ -256,20 +329,9 @@ export default {
     },
   },
   methods: {
-    async changeStatus(row) {
-      const newStatus = row.status;
-      const { id } = this.$route.params;
-      try {
-        await this.$axios.patch(
-          `/reservations/${id}/update?status=${newStatus}`
-        );
-        this.$message.success("Status updated successfully");
-      } catch (e) {
-        this.$message.error("Error updating status");
-      }
-    },
-    toggleEmpPopup() {
+    toggleEmpPopup(row) {
       this.showEmpPopup = !this.showEmpPopup;
+      this.reservationId = row.id;
     },
     togglePopup() {
       this.showPopup = !this.showPopup;
@@ -296,6 +358,18 @@ export default {
         }
       });
     },
+    async changeStatus(row) {
+      const newStatus = row.status;
+      const { id } = row;
+      try {
+        await this.$axios.patch(
+          `/reservations/${id}/update?status=${newStatus}`
+        );
+        this.$message.success("Status updated successfully");
+      } catch (e) {
+        this.$message.error("Error updating status");
+      }
+    },
     async editEmployee() {
       if (!this.employee) {
         this.$message.error("Please select an employee");
@@ -303,7 +377,7 @@ export default {
       }
       const loading = this.$loading();
       try {
-        const { id } = this.$route.params;
+        const id = this.reservationId;
         await this.$axios.patch(`/reservations/${id}/update`, {
           empolyee: this.employee,
         });
@@ -311,9 +385,7 @@ export default {
         this.showEmpPopup = false;
         window.location.reload();
       } catch (e) {
-        this.$message.error(
-          e.response.data.message || "Error assigning employee"
-        );
+        this.$message.error("Error assigning employee");
       } finally {
         loading.close();
       }

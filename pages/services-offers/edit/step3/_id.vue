@@ -9,7 +9,7 @@
     <el-form :rules="formRules" :model="form" ref="form" class="mt-5">
       <div class="d-flex gap-5">
         <el-form-item prop="price">
-          <span class="d-block">Price $</span>
+          <span class="d-block">Price ₪</span>
           <el-input-number
             v-model="form.price"
             :controls="false"

@@ -99,7 +99,7 @@
 .service-details {
   display: flex;
   gap: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   .key {
     font-size: 1.8rem;
@@ -108,5 +108,16 @@
   .value {
     color: #9a9a9a;
     font-size: 1.8rem;
+
+    &--emp {
+      display: flex;
+
+      .emp::after {
+        content: ",";
+      }
+      .emp:last-child::after {
+        content: "";
+      }
+    }
   }
 }

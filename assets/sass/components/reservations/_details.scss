@@ -25,6 +25,13 @@ section {
       }
     }
   }
+
+  .children {
+    color: #ea3162;
+    font-size: 1.8rem;
+    margin: 0 1rem;
+  }
+
   .content {
     margin-top: 2rem;
     display: flex;
@@ -33,6 +40,10 @@ section {
 
     &__left {
       width: 75%;
+
+      &--children {
+        width: 100%;
+      }
     }
 
     &__right {

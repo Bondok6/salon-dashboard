@@ -10,6 +10,7 @@
     style="width: 100%"
     height="100%"
     stripe
+    @current-change="handleCurrentChange"
   >
     <el-table-column label="ID" type="index" width="50"> </el-table-column>
     <el-table-column
@@ -27,7 +28,6 @@
         <img
           src="@/assets/images/customers/action.png"
           style="cursor: pointer"
-          @click="handleClick(scope.$index, scope.row)"
         />
       </template>
     </el-table-column>
@@ -48,8 +48,8 @@ export default {
     };
   },
   methods: {
-    handleClick(_, row) {
-      const { id } = row;
+    handleCurrentChange(val) {
+      const { id } = val;
       this.$router.push(`/customers/details/${id}`);
     },
   },

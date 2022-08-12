@@ -235,7 +235,6 @@ export default {
           const dateTime =
             date.format("YYYY-MM-DD") + " " + time.format("HH:mm");
           const dateTimeIso = new Date(dateTime).toISOString();
-          console.log(dateTimeIso);
           try {
             const newReservation = {
               ...this.form,
