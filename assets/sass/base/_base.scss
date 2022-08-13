@@ -12,6 +12,33 @@ body {
   background-color: #fff;
 }
 
+// Pagination
 .el-pagination {
   float: right !important;
+}
+
+.el-pagination__sizes .el-input .el-input__inner:hover {
+  border-color: #ea3162;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: #ea3162;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #ea3162;
+  color: #fff;
+}
+.el-pager li.active + li {
+  border-left: 0;
+}
+.el-pager li:hover {
+  color: #ea3162;
+}
+.el-pager li.active {
+  color: #ea3162;
+  cursor: default;
+}
+.el-dialog__headerbtn:focus .el-dialog__close,
+.el-dialog__headerbtn:hover .el-dialog__close {
+  color: #ea3162;
 }

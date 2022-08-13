@@ -1,7 +1,9 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <div class="header">
-      <h2><span>Reservations > </span>Reservation #{{ id }}</h2>
+      <h2>
+        <span>Reservations > </span>Reservation # {{ data.reservationNo }}
+      </h2>
       <button class="btn btn--pink btn--details" @click="togglePopup">
         + Add Session
       </button>
@@ -39,7 +41,7 @@
                     src="@/assets/images/reservations/edit.png"
                     alt="edit"
                     role="button"
-                    @click="toggleEmpPopup()"
+                    @click="toggleEmpPopup(scope.row)"
                   />
                 </div>
               </figure>
