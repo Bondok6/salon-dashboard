@@ -158,13 +158,9 @@ export default {
       this.$router.push("/reservations/add");
     },
     async fetchReservations() {
-      let params = { page: this.page, limit: 10 };
+      let params = { page: this.page, limit: 10, Isparent: true };
       const response = await this.$axios.$get("/reservations", { params });
-      const data = response.docs;
-      // extract only parent reservation
-      this.reservations = data.filter((reservation) => {
-        return reservation.isChiled === false;
-      });
+      this.reservations = response.docs;
       this.totalPages = await response.totalPages;
       this.page = await response.page;
     },
@@ -180,7 +176,8 @@ export default {
     async filterByStatus() {
       let params = {
         page: this.page,
-        limit: 5,
+        limit: 10,
+        Isparent: true,
         status: this.form.status,
         startDate: this.form.startDate.toISOString(),
         endDate: this.form.endDate.toISOString(),

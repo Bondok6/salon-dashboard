@@ -19,7 +19,6 @@
           <h6>Today</h6>
         </div>
         <h3>${{ todayRevenue }}</h3>
-        <p>68.2% more earnings than last day.</p>
       </div>
     </div>
   </div>
@@ -102,26 +101,19 @@ export default {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    color: #5e5873;
 
     h4 {
       font-size: 2rem;
-      color: #5e5873;
     }
 
     h6 {
       font-size: 1.5rem;
-      color: #6e6b7b;
     }
 
     h3 {
       font-size: 3rem;
       font-weight: bold;
-      color: #5e5873;
-    }
-
-    p {
-      font-size: 1.5rem;
-      color: #b9b9c3;
     }
   }
 }

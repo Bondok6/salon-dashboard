@@ -6,11 +6,11 @@
     </button>
 
     <div class="navbar__left">
-      <ul class="nav-links">
+      <!-- <ul class="nav-links">
         <li>
           <img src="@/assets/images/navbar/cart.svg" alt="cart-icon" />
         </li>
-      </ul>
+      </ul> -->
       <figure>
         <img src="@/assets/images/navbar/avatar.svg" alt="avatar" />
         <figcaption>

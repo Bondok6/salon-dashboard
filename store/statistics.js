@@ -102,6 +102,8 @@ export const actions = {
     const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const progress = [];
 
+    console.log(data);
+
     // If data == [], then there is no data for the last 7 days
     if (data.length === 0) {
       for (let i = 0; i < 7; i++) {
@@ -127,7 +129,6 @@ export const actions = {
     // If data != [], then I should get the day from the date and the count from the data
     // I should push the data to the progress array
     if (data.length > 0) {
-      const progress = [];
       data.forEach((el) => {
         progress.push({
           day: convertDay(el._id),
@@ -154,6 +155,7 @@ export const actions = {
         el.count = Math.round((el.count / maxCount) * 100);
       });
 
+      console.log(progress);
       commit("setLinearProgress", progress);
       return;
     }
