@@ -11,9 +11,6 @@ export const mutations = {
   setEmployees(state, employees) {
     state.employees = employees;
   },
-  setServices(state, services) {
-    state.services = services;
-  },
 };
 
 // Actions
@@ -21,7 +18,7 @@ export const actions = {
   async fetchCalendar({ commit }, date = new Date()) {
     // formate to localeString
     // const formattedDate = date.toLocaleString();
-   
+
     const day = "2022-08-08T22:00:00.000Z";
     const response = await this.$axios.$get(`/reservations/calender/slots`, {
       params: {
@@ -30,6 +27,7 @@ export const actions = {
     });
     const filters = response.map((res) => res.filters);
     commit("setCalendar", filters);
+    console.log(filters);
     const employees = filters.map((filter) => filter[0].empolyee);
     commit("setEmployees", employees);
   },

@@ -96,8 +96,8 @@ export default {
   },
   methods: {
     duration(slot, serviceDuration) {
-      const start = this.$moment(slot.start);
-      const end = this.$moment(slot.start).add(serviceDuration, "minutes");
+      const start = this.$moment(slot);
+      const end = this.$moment(slot).add(serviceDuration, "minutes");
       const startTime = start.format("h:mm A");
       const endTime = end.format("h:mm A");
       return `${startTime} - ${endTime}`;

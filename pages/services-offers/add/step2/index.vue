@@ -98,15 +98,17 @@ export default {
       const [startTime, endTime] = await this.$store.dispatch(
         `workTimes/fetchWorkingHoursCurrentDay`
       );
+      console.log(startTime, endTime);
       this.slots = this.generateSlots(startTime, endTime, duration);
     },
     generateSlots(start, end, duration) {
-      let startTime = this.$moment(start, "HH:mm");
-      let endTime = this.$moment(end, "HH:mm").add(1, "days");
-      let slots = [];
-      while (startTime < endTime) {
-        slots.push(startTime.format("hh:mm a"));
-        startTime.add(duration, "minutes");
+      const slots = [];
+      const startTime = this.$moment(start);
+      const endTime = this.$moment(end);
+      const durationTime = this.$moment.duration(duration, "minutes");
+      while (startTime.isBefore(endTime)) {
+        slots.push(startTime.format("h:mm A"));
+        startTime.add(durationTime);
       }
       return slots;
     },
