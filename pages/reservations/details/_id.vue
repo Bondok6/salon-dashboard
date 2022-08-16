@@ -300,7 +300,6 @@ export default {
         empName: employee.empName,
       };
     });
-    console.log(this.data);
   },
   data() {
     return {

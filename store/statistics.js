@@ -102,8 +102,6 @@ export const actions = {
     const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const progress = [];
 
-    console.log(data);
-
     // If data == [], then there is no data for the last 7 days
     if (data.length === 0) {
       for (let i = 0; i < 7; i++) {
@@ -155,7 +153,6 @@ export const actions = {
         el.count = Math.round((el.count / maxCount) * 100);
       });
 
-      console.log(progress);
       commit("setLinearProgress", progress);
       return;
     }

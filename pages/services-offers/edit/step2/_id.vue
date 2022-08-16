@@ -90,7 +90,6 @@ export default {
     goNext() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.form.employees = this.form.employees.map((emp) => emp.id);
           sessionStorage.setItem("form2", JSON.stringify(this.form));
           const { id } = this.$route.params;
           this.$router.push(`/services-offers/edit/step3/${id}`);
@@ -117,7 +116,6 @@ export default {
       }
       return slots;
     },
-    
   },
 };
 </script>
