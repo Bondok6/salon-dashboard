@@ -45,9 +45,20 @@
             @click="goTo(c.directParent)"
             role="button"
           >
-            <h4>{{ c.service.nameEn }}</h4>
-            <h6>{{ c.firstName + " " + c.lastName }}</h6>
-            <p>{{ duration(c.slot, c.service.deuration) }}</p>
+            <div class="session__data">
+              <h4>Customer Name :</h4>
+              <h4>
+                {{ c.firstName + " " + c.lastName }}
+              </h4>
+            </div>
+            <div class="session__data">
+              <h4>Service Name :</h4>
+              <h4>{{ c.service.nameEn }}</h4>
+            </div>
+            <div class="session__data">
+              <h4>Service Time :</h4>
+              <h4>{{ duration(c.slot, c.service.deuration) }}</h4>
+            </div>
           </div>
         </div>
       </div>
@@ -138,27 +149,35 @@ export default {
   }
 
   .session {
-    width: 200px;
-    height: 100px;
+    width: 90%;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 0.5rem;
     margin: 1rem 0;
     border-radius: 0.5rem;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+    transition: 0.4s;
 
-    h4 {
-      font-size: 1.4rem;
-      font-weight: bold;
+    .session__data {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2rem;
+      align-items: center;
+
+      h4:first-child {
+        font-size: 1.4rem;
+        color: #000;
+      }
+
+      h4:nth-child(2) {
+        color: #fff;
+      }
     }
-    h6 {
-      font-size: 1.2rem;
-    }
-    p {
-      font-size: 1.2rem;
-      font-weight: 400;
-    }
+  }
+  .session:hover {
+    transform: scale(1.1);
   }
 }
 </style>

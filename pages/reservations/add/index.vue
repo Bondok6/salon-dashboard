@@ -22,8 +22,8 @@
           <el-input
             type="number"
             v-model="form.phone"
-            placeholder="97241061234"
-            oninput="if(this.value.length>11) this.value=this.value.slice(0,11)"
+            placeholder="0950410614"
+            oninput="if(this.value.length>10) this.value=this.value.slice(0,10)"
           >
           </el-input>
         </el-form-item>
