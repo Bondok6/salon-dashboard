@@ -160,7 +160,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Note" prop="clientNotes" align="center">
+          <el-table-column label="Admin Note" prop="adminNotes" align="center">
           </el-table-column>
         </el-table>
       </div>
@@ -182,12 +182,32 @@
         <el-form-item label="Date" prop="day">
           <el-date-picker
             v-model="form.day"
-            type="datetime"
-            placeholder="Select date and time"
-            class="w-100"
+            type="date"
+            placeholder="Select Date"
+            @change="onDateChange"
+            style="width: 100%"
           >
           </el-date-picker>
         </el-form-item>
+
+        <el-form-item label="Time" prop="slot">
+          <el-select
+            v-model="form.slot"
+            placeholder="Select"
+            :disabled="!form.day"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="(item, index) in availableTimes"
+              :key="index"
+              :label="item"
+              :value="item"
+              class="text-center"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="Notes" prop="adminNotes">
           <el-input
             v-model="form.adminNotes"
@@ -280,6 +300,7 @@ export default {
         empName: employee.empName,
       };
     });
+    console.log(this.data);
   },
   data() {
     return {
@@ -311,18 +332,21 @@ export default {
         },
       ],
       form: {
-        day: null,
+        day: "",
+        slot: "",
         adminNotes: "",
       },
       formRules: {
-        day: [{ required: true, message: "Please select date and time" }],
-        adminNotes: [{ required: true, message: "Please enter notes" }],
+        day: [{ required: true, message: "Please select day" }],
+        slot: [{ required: true, message: "Please select time" }],
+        adminNotes: [{ required: true, message: "Please enter note" }],
       },
       showPopup: false,
       showEmpPopup: false,
       validEmployees: [],
       employee: null,
       reservationId: null,
+      availableTimes: [],
     };
   },
   computed: {
@@ -344,16 +368,20 @@ export default {
           const loading = this.$loading();
           try {
             const { id } = this.$route.params;
-            this.form.day = this.form.day.toISOString();
-            this.form.slot = this.data.slot;
+
+            // convert day to 22022-08-16 then add T + slot + Z
+            const day = this.$moment(this.form.day).format("YYYY-MM-DD");
+            const slot = this.form.slot;
+            const slotTime = this.$moment(slot, "h:mm a").format("HH:mm:ss");
+            const slotDate = `${day}T${slotTime}Z`;
+            this.form.slot = slotDate;
+            this.form.day = slotDate;
             await this.$axios.post(`/reservations/${id}/chiled`, this.form);
             this.showPopup = false;
             this.$message.success("Session added successfully");
             window.location.reload();
           } catch (e) {
-            this.$message.error(
-              e.response.data.message || "Error adding session"
-            );
+            this.$message.error("Error adding session");
           } finally {
             loading.close();
           }
@@ -391,6 +419,28 @@ export default {
       } finally {
         loading.close();
       }
+    },
+    generateSlots(start, end, duration) {
+      const slots = [];
+      const startTime = this.$moment(start);
+      const endTime = this.$moment(end);
+      const durationTime = this.$moment.duration(duration, "minutes");
+      while (startTime.isBefore(endTime)) {
+        slots.push(startTime.format("h:mm A"));
+        startTime.add(durationTime);
+      }
+      return slots;
+    },
+    async onDateChange(date) {
+      const [startTime, endTime] = await this.$store.dispatch(
+        `workTimes/fetchWorkingHoursSpecificDay`,
+        date
+      );
+      this.availableTimes = this.generateSlots(
+        startTime,
+        endTime,
+        this.data.service.deuration
+      );
     },
   },
 };

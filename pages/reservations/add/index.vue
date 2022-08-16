@@ -193,13 +193,13 @@ export default {
   },
   methods: {
     generateSlots(start, end, duration) {
-      // 02:30 Am - 03:30 Am
-      let startTime = this.$moment(start, "hh:mm A");
-      let endTime = this.$moment(end, "hh:mm A").add(1, "days");
-      let slots = [];
-      while (startTime < endTime) {
-        slots.push(startTime.format("hh:mm A"));
-        startTime.add(duration, "minutes");
+      const slots = [];
+      const startTime = this.$moment(start);
+      const endTime = this.$moment(end);
+      const durationTime = this.$moment.duration(duration, "minutes");
+      while (startTime.isBefore(endTime)) {
+        slots.push(startTime.format("h:mm A"));
+        startTime.add(durationTime);
       }
       return slots;
     },
